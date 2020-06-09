@@ -7,9 +7,24 @@ $main_color: #02c39a;
   outline: 0;
   box-sizing: border-box;
 }
+html,
+body,
+#app {
+  width: 100% !important;
+}
 body {
   background: #f8f9fa;
 }
+
 .text-primary {
   color: $main_color !important;
+}
+
+div.container {
+  margin-top: 25px;
+  border-radius: $border_radius;
+  background-color: white !important;
+  min-height: 600px !important;
+  padding: 0;
+  box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.1);
 }
