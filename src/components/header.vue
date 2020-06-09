@@ -1,7 +1,7 @@
 <template>
   <header class="menu d-flex justify-content-center">
     <div class="container d-flex justify-content-center" v-if="!mobile">
-      <span>
+      <span @click="$route.name != 'Home' ? $router.push({name:'Home'}) : ''">
         Duane
         <span class="text-primary">Faria</span>
       </span>

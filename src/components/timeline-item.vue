@@ -19,7 +19,7 @@ export default {
 
 <style scoped lang="scss">
 .timeline-container {
-  height: 350px;
+  min-height: 350px;
 }
 .timeline-item {
   margin-bottom: 20px;

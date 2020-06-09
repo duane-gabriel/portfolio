@@ -16,15 +16,35 @@
             <timeline-item :data="expirience"/>
         </div>
       </div>
+      <div class="row">
+        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column
+        align-items-center
+        justify-content-center">
+          <h2 class="font-weight-normal mb-3">Backend <span class="text-primary">Skills</span></h2>
+          <progressBar :data="back" v-for="back of backend" :key="Math.random()+back.title"/>
+        </div>
+        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
+        d-flex flex-column        align-items-center        justify-content-center">
+          <h2 class="font-weight-normal mb-3">Frontend <span class="text-primary">Skills</span></h2>
+          <progressBar :data="front" v-for="front of frontend" :key="Math.random()+front.title"/>
+        </div>
+        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex
+        justify-content-center d-flex flex-column align-items-center justify-content-center">
+          <h2 class="font-weight-normal  mb-3">Others <span class="text-primary">Skills</span></h2>
+          <progressBar :data="other" v-for="other of others" :key="Math.random()+other.title"/>
+
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import timelineItem from '@/components/timeline-item.vue';
+import progressBar from '@/components/progress-bar.vue';
 
 export default {
-  components: { timelineItem },
+  components: { timelineItem, progressBar },
   data() {
     return {
       education: [
@@ -55,6 +75,52 @@ export default {
           description: 'Programador junior',
         },
       ],
+      backend: [
+        {
+          title: 'Nodejs',
+          percent: 50,
+        },
+        {
+          title: 'Express',
+          percent: 50,
+        },
+        {
+          title: 'MySql',
+          percent: 50,
+        },
+      ],
+      frontend: [
+        {
+          title: 'Vuejs',
+          percent: 60,
+        },
+        {
+          title: 'Reactjs',
+          percent: 35,
+        },
+        {
+          title: 'Bootstrap',
+          percent: 60,
+        },
+        {
+          title: 'Jquery',
+          percent: 65,
+        },
+      ],
+      others: [
+        {
+          title: 'Git',
+          percent: 50,
+        },
+        {
+          title: 'Scrum/Kanban',
+          percent: 40,
+        },
+        {
+          title: 'Jira',
+          percent: 39,
+        },
+      ],
     };
   },
 };
@@ -62,8 +128,6 @@ export default {
 <style scoped lang="scss">
 .resume {
   header {
-    h1 {
-    }
     background-color: $main_color !important;
     width: 100%;
     height: 120px;
@@ -72,6 +136,9 @@ export default {
   }
   h2 {
     font-size: 1.5rem;
+  }
+  .container{
+    height: 900px !important;
   }
 }
 </style>

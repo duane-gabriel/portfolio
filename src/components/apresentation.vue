@@ -45,7 +45,7 @@
             </p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,
             impedit enim recusandae delectus!
             <br />
-            <button class="mt-4 btn btn-primary">download curriculo</button>
+            <a href="./curriculo.txt" download="curriculo.txt" class="mt-4 btn btn-info">download curriculo</a>
           </blockquote>
           <section class="col-md-6 d-flex col-lg-6 col-xl-6 justify-content-center">
             <table class="w-75">
