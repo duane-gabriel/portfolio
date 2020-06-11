@@ -13,8 +13,10 @@
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-persist": "^0.4.0",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-persist": "^2.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.0",

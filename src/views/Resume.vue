@@ -139,6 +139,7 @@ export default {
   }
   .container{
     height: 900px !important;
+    margin-bottom: 50px;
   }
 }
 </style>

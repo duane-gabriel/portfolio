@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Resume from '../views/Resume.vue';
+import Projects from '../views/Projects.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/curriculo',
     name: 'Resume',
     component: Resume,
+  },
+  {
+    path: '/rojects',
+    name: 'Projects',
+    component: Projects,
   },
 ];
 
