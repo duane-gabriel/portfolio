@@ -3,7 +3,7 @@
   <div class="apresentation">
     <div class="container">
       <header class="d-flex">
-        <div class="row">
+        <div class="row w-75">
           <div class="col-lg-6 col-sm-12">
             <div class="picture-frame">
               <img
@@ -45,7 +45,11 @@
             </p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,
             impedit enim recusandae delectus!
             <br />
-            <a href="./curriculo.txt" download="curriculo.txt" class="mt-4 btn btn-info">download curriculo</a>
+            <a
+              href="./curriculo.txt"
+              download="curriculo.txt"
+              class="mt-4 btn btn-info"
+            >download curriculo</a>
           </blockquote>
           <section class="col-md-6 d-flex col-lg-6 col-xl-6 justify-content-center">
             <table class="w-75">
@@ -89,6 +93,7 @@ export default {
       height: 280px;
       width: 250px;
       margin-top: 35px;
+      margin-bottom: -50px;
       position: relative;
       left: 0;
       img {
@@ -100,7 +105,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 400px;
+      /* min-width: 400px; */
       align-items: center;
       .social-media {
         margin-top: 15px;
@@ -141,6 +146,33 @@ export default {
     }
     .description-title {
       font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 768px) {
+    .picture-frame {
+      margin-bottom: 15px !important;
+    }
+  }
+  @media (max-width: 575px) {
+    header {
+      padding-bottom: 30px;
+      content {
+      }
+    }
+    div.about {
+      blockquote {
+        order: 1;
+      }
+      section {
+        order: 0;
+        table {
+          width: 100% !important;
+          margin: 0 27px;
+          td {
+            width: 100px;
+          }
+        }
+      }
     }
   }
 }

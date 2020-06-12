@@ -16,7 +16,7 @@
         >{{item.name}}</li>
       </ul>
     </div>
-    <menuMobile v-if="mobile"></menuMobile>
+    <menuMobile v-if="mobile" :itens="menuItens"></menuMobile>
   </header>
 </template>
 
@@ -128,6 +128,12 @@ header.menu {
       bottom: -03px;
       left: 25%;
     }
+  }
+}
+@media (max-width: 576px) {
+  header.menu {
+    margin-top: 0 !important;
+    margin-bottom: 15px;
   }
 }
 </style>

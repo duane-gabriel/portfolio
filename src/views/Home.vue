@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import content from '@/components/content.vue';
 import apresentation from '@/components/apresentation.vue';
 
 export default {

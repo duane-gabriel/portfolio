@@ -11,6 +11,7 @@ html,
 body,
 #app {
   width: 100% !important;
+  overflow-x: hidden;
 }
 body {
   background: #f8f9fa;
@@ -21,10 +22,10 @@ body {
 }
 
 div.container {
-  margin-top: 25px;
   border-radius: $border_radius;
   background-color: white !important;
   min-height: 600px !important;
   padding: 0;
   box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
