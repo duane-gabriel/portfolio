@@ -8,12 +8,15 @@
       </div>
       <div class="row pt-5 d-flex justify-content-center">
         <div class="grid-container d-flex justify-content-center" style="width: 95%;">
-          <div class="px-2 col-sm-12 col-md-4 col-lg-4 col-xl-4" v-for="(x, index) of 3" :key="x">
-            <figure @mouseover="imgHover('id' + index, 'over')"
-            @mouseout="imgHover('id' + index, 'out')">
+          <div class="pr-2 col-sm-12 col-md-4 col-lg-4 col-xl-4" v-for="(x, index) of 3" :key="x">
+            <figure
+              @mouseover="imgHover('id' + index, 'over')"
+              @mouseout="imgHover('id' + index, 'out')"
+              @click="openModal(cards[0])"
+            >
               <img
                 src="https://image.freepik.com/fotos-gratis/homem-de-codificacao_1098-18084.jpg"
-                alt=""
+                alt
                 class="img-fluid"
               />
               <div :class="'position-absolute img-overlay ' + 'id' + index"></div>
@@ -22,26 +25,49 @@
         </div>
       </div>
     </div>
+    <modalProject @closeModal="visible = false" :data="data" :visible="visible" />
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+import modalProject from "@/components/modal-project.vue";
 export default {
+  components: { modalProject },
+  data() {
+    return {
+      data: {},
+      cards: [
+        {
+          title: "Github searcher com Reacjs",
+          tecnologies: ["React", "React router", "Redux"],
+          description: "Um projeto com o intuito...",
+          date: "10/10/10",
+          preview: "https://www.google.com.br"
+        }
+      ],
+      visible: false
+    };
+  },
   methods: {
     imgHover(id, option) {
-      const overlays = document.getElementsByClassName('img-overlay');
-      console.log(overlays);
-      overlays.forEach((overlay) => overlay.classList.remove('visible'));
+      const overlays = document.getElementsByClassName("img-overlay");
+      // console.log(overlays);
+      overlays.forEach(overlay => overlay.classList.remove("visible"));
 
-      const className = document.getElementsByClassName(id)[0];
+      // const className = document.getElementsByClassName(id)[0];
 
-      if (option === 'over') {
-        className.classList.add('visible');
-        return;
+      if (option === "over") {
+        // className.classList.add('visible');
+        // return;
       }
-      className.classList.remove('visible');
+      // className.classList.remove('visible');
     },
-  },
+    openModal(data) {
+      this.visible = true;
+      this.data = data;
+    }
+  }
 };
 </script>
 
@@ -68,15 +94,17 @@ h2 {
   top: 0;
   visibility: hidden;
   transition: all 300ms ease 0s;
-  &:hover{
-    cursor:pointer;
+  &:hover {
+    cursor: pointer;
   }
 }
-.visible{
+.visible {
   visibility: visible;
   left: 0;
 }
-
+figure:hover {
+  cursor: pointer;
+}
 @media (max-width: 500px) {
   .grid-container {
     flex-direction: column;
