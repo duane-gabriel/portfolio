@@ -3,8 +3,8 @@
   <div class="apresentation">
     <div class="container">
       <header class="d-flex">
-        <div class="row w-75">
-          <div class="col-lg-6 col-sm-12">
+        <div class="row w-lg-75">
+          <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
             <div class="picture-frame">
               <img
                 src="https://st.depositphotos.com/1129232/5088/v/950/depositphotos_50880205-stock-illustration-vector-hipster-man-icon-hipster.jpg"
@@ -14,7 +14,7 @@
           </div>
           <content class="text col-lg-6 col-sm-12">
             <h1>Duane Faria</h1>
-            <small class="text-center">programador</small>
+            <small class="text-center">Programador full stack</small>
             <div class="social-media">
               <div class="social-media-circle">
                 <img
@@ -76,11 +76,60 @@ export default {
         { question: "Celular", answer: "(11) 97712-4554" }
       ]
     };
+  },
+  mounted() {
+    let txtEl = document.getElementsByTagName("small")[0];
+    function type(el) {
+      const txt = el.innerHTML.split("");
+      el.innerHTML = "";
+      txt.forEach((letra, i) => {
+        setTimeout(() => {
+          el.innerHTML += letra;
+        }, 75 * i);
+      });
+      // erase(txtEl);
+    }
+
+    type(txtEl);
+
+    function erase(txtEl) {
+      const ap = txtEl.innerHTML.split("");
+      const ap2 = txtEl.innerHTML.split("");
+      for (let i = ap.lengt; i != 0; i--) {
+        let nt = ap2.slice(ap2.lastIndexOf(ap[i]), ap2.lastIndexOf(ap[i]) + 1);
+
+        setTimeout(() => {
+          txtEl.innerHTML = txtEl.innerHTML;
+        }, 75 * i);
+      }
+    }
   }
 };
 </script>
 <style lang="scss">
 .apresentation {
+  small:after {
+    content: "|";
+    margin-left: 5px;
+    opacity: 1;
+    animation: pisca 0.7s infinite;
+  }
+
+  @keyframes pisca {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 800px) {
+    .w-lg-75 {
+      width: 75%;
+    }
+  }
   header {
     justify-content: space-around;
     background: $main_color;
@@ -105,8 +154,10 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      /* min-width: 400px; */
       align-items: center;
+      small {
+        font-size: 1.2rem;
+      }
       .social-media {
         margin-top: 15px;
         display: flex;

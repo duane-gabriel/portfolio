@@ -1,6 +1,7 @@
 <template>
-  <div class="menu-mobile d-flex justify-content-between">
-    <span class="text-white" @click="$route.name != 'Home' ? $router.push({name:'Home'}) : ''">
+  <div class="menu-mobile pt-3 px-3 d-flex justify-content-between">
+    <span class="text-white title"
+    @click="$route.name != 'Home' ? $router.push({name:'Home'}) : ''">
       Duane
       Faria
     </span>
@@ -52,17 +53,26 @@ export default {
 
 <style  lang="scss">
 .menu-mobile {
-  $heightMenu: 40;
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+  
+  $heightMenu: 60;
   $heightSide: $heightMenu - 10;
   background-color: $main_color;
   width: 100%;
-  margin-top: -10px;
   height: $heightMenu + px;
-  padding: 10px 20px !important;
   transition: all 0.44s ease-in-out;
+
   .gray {
     color: gray;
   }
+
+  .title{
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+  }
+
   .icon-hamburguer {
     &:hover {
       cursor: pointer;
@@ -76,7 +86,7 @@ export default {
   }
   overflow: hidden !important;
   aside {
-    margin-top: $heightSide + px;
+    margin-top: 44px;
     background-color: $main_color;
     color: #fff;
     right: 0;

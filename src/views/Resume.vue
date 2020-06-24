@@ -6,12 +6,12 @@
           <h1 class="text-white">Curriculo</h1>
         </header>
       </div>
-      <div class="row pl-4">
-        <div class="pt-3 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div class="row pl-lg-4 pl-3 pr-3">
+        <div class="pt-4 pl-0 pl-sm-1 pl-md-4 pl-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <h2 class="font-weight-normal">Educação</h2>
             <timeline-item :data="education"/>
         </div>
-        <div class="pt-3 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="pt-4 pr-0 pr-sm-1 pr-md-4 pr-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <h2 class="font-weight-normal">Experiência</h2>
             <timeline-item :data="expirience"/>
         </div>
@@ -140,6 +140,12 @@ export default {
   .container{
     height: 900px !important;
     margin-bottom: 50px;
+  }
+  @media(max-width:500px){
+    .container{
+      height: auto !important;
+      padding-bottom:20px;
+    }
   }
 }
 </style>

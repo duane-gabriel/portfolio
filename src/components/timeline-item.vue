@@ -23,7 +23,7 @@ export default {
 }
 .timeline-item {
   margin-bottom: 20px;
-  width: 65%;
+  width: 90%;
   height: auto;
   background: #fff;
   margin-left: 20px;

@@ -1,10 +1,10 @@
 <template>
   <header class="menu d-flex justify-content-center">
     <div class="container d-flex justify-content-center" v-if="!mobile">
-      <span @click="setMenu(menuItens[0]);
+      <span class="title" @click="setMenu(menuItens[0]);
       $route.name != 'Home' ? $router.push({name:'Home'}) : ''">
         Duane
-        <span class="text-primary">Faria</span>
+        <span class="text-primary title">Faria</span>
       </span>
       <ul>
         <li
@@ -129,6 +129,11 @@ header.menu {
       bottom: -03px;
       left: 25%;
     }
+  }
+  .title {
+    font-family: 'Montserrat', sans-serif;
+    font-size:1rem;
+    font-weight: 500;
   }
 }
 @media (max-width: 576px) {
