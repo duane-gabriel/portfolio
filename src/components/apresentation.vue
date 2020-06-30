@@ -6,10 +6,12 @@
         <div class="row w-lg-75">
           <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
             <div class="picture-frame">
-              <img
-                src="https://st.depositphotos.com/1129232/5088/v/950/depositphotos_50880205-stock-illustration-vector-hipster-man-icon-hipster.jpg"
-                alt
-              />
+              <a href="https://www.linkedin.com/in/duane-faria-224886153/" target="_blank">
+                <img
+                  src="https://st.depositphotos.com/1129232/5088/v/950/depositphotos_50880205-stock-illustration-vector-hipster-man-icon-hipster.jpg"
+                  alt
+                />
+              </a>
             </div>
           </div>
           <content class="text col-lg-6 col-sm-12">
@@ -17,19 +19,23 @@
             <small class="text-center">Programador full stack</small>
             <div class="social-media">
               <div class="social-media-circle">
-                <img
-                  class="img-fluid"
-                  src="https://img.icons8.com/cotton/64/000000/facebook-circled--v1.png"
-                />
+                <a href="https://www.instagram.com/duhh_gabriel/" target="_blank">
+                  <!-- <img
+                    class="img-fluid"
+                    src="https://img.icons8.com/cotton/26/000000/instagram-new.png"
+                  /> -->
+                  <i class="fab fa-instagram"></i>
+                </a>
               </div>
               <div class="social-media-circle">
-                <img
-                  class="img-fluid"
-                  src="https://img.icons8.com/cotton/26/000000/instagram-new.png"
-                />
+                <!-- <img class="img-fluid" src="https://img.icons8.com/ios/50/000000/linkedin-2.png" /> -->
+                <i class="fab fa-linkedin-in"></i>
               </div>
               <div class="social-media-circle">
-                <img class="img-fluid" src="https://img.icons8.com/ios/50/000000/linkedin-2.png" />
+                <a href="https://github.com/duane-gabriel" target="_blank">
+                  <!-- <img class="img-fluid" src="https://img.icons8.com/fluent/60/000000/github.png"/> -->
+                  <i class="fab fa-github"></i>
+                </a>
               </div>
             </div>
           </content>
@@ -107,6 +113,10 @@ export default {
 </script>
 <style lang="scss">
 .apresentation {
+  i { 
+    color:$main_color;
+    font-size:20px;
+  }
   small:after {
     content: "|";
     margin-left: 5px;
@@ -169,6 +179,7 @@ export default {
           border-radius: 25px;
           display: flex;
           justify-content: center;
+          align-items: center;
           margin: 0 10px;
           box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1);
           &:hover {
