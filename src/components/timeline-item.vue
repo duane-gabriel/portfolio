@@ -1,6 +1,6 @@
 <template>
   <div class="border-left timeline-container mt-4">
-    <div class="timeline-item" v-for="edu of data" :key="Math.randon+edu.title">
+    <div class="timeline-item" v-for="edu of data" :key="Math.random()+edu.title">
       <h3>{{edu.title}}</h3>
       <div class="course-info">
         <span class="text-primary">{{edu.year}}</span>

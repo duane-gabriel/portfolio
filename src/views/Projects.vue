@@ -84,6 +84,9 @@ header {
   border-top-left-radius: $border_radius;
   border-top-right-radius: $border_radius;
 }
+h1 {
+  font-family: "Montserrat", sans-serif;
+}
 h2 {
   font-size: 1.5rem;
 }

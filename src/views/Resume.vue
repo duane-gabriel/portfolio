@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <header class="d-flex justify-content-center align-items-center">
-          <h1 class="text-white">Curriculo</h1>
+          <h1 class="text-white">Currículo</h1>
         </header>
       </div>
       <div class="row pl-lg-4 pl-3 pr-3">
@@ -16,7 +16,7 @@
             <timeline-item :data="expirience"/>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="showSkills">
         <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column
         align-items-center
         justify-content-center">
@@ -47,6 +47,7 @@ export default {
   components: { timelineItem, progressBar },
   data() {
     return {
+      showSkills: false,
       education: [
         {
           title: 'Curso técnico em informática',
@@ -63,18 +64,38 @@ export default {
       ],
       expirience: [
         {
-          title: 'Estágio em desenvolvimento de software',
-          year: 'Set 2018 - Mar 2019',
-          institution: 'hitcode',
-          description: 'Estágio em dev',
+          title: 'Programador',
+          year: 'Set 2018 - Mai 2020',
+          institution: 'maicrosôfté',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
         },
         {
-          title: 'Programador Junior',
-          year: 'Abr 2019 - Mar 2020',
-          institution: 'fasters',
-          description: 'Programador junior',
+          title: 'Programador',
+          year: 'Set 2018 - Mai 2020',
+          institution: 'maicrosôfté',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+        },
+        {
+          title: 'Programador',
+          year: 'Set 2018 - Mai 2020',
+          institution: 'maicrosôfté',
+          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
         },
       ],
+      // expirience: [
+      //   {
+      //     title: 'Estágio em desenvolvimento de software',
+      //     year: 'Set 2018 - Mar 2019',
+      //     institution: 'hitcode',
+      //     description: 'Estágio em dev',
+      //   },
+      //   {
+      //     title: 'Programador Junior',
+      //     year: 'Abr 2019 - Mar 2020',
+      //     institution: 'fasters',
+      //     description: 'Programador junior',
+      //   },
+      // ],
       backend: [
         {
           title: 'Nodejs',
@@ -127,6 +148,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .resume {
+  h1 {
+    font-family: "Montserrat", sans-serif;
+  }
   header {
     background-color: $main_color !important;
     width: 100%;
