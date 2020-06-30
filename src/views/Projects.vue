@@ -44,7 +44,7 @@ export default {
           description: "Um projeto com o intuito...",
           date: "10/10/10",
           preview: "https://www.google.com.br",
-          content:`<img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
+          content: `<img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
@@ -109,6 +109,9 @@ h2 {
 }
 figure:hover {
   cursor: pointer;
+}
+img {
+  border-radius: 05px;
 }
 @media (max-width: 500px) {
   .grid-container {

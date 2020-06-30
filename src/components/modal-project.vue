@@ -62,7 +62,7 @@ export default {
   top: 0;
   left: 0;
   font-family: 'Montserrat', sans-serif;
-
+  overflow-x:hidden;
   .container {
     margin-top: unset !important;
     border-radius: unset !important;

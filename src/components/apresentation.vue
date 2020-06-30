@@ -87,7 +87,6 @@ export default {
           el.innerHTML += letra;
         }, 75 * i);
       });
-      // erase(txtEl);
     }
 
     type(txtEl);
