@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="">
-    <Header v-if="$route.path !== '/login'"/>
+    <Header v-if="!(['Login', 'Admin'].indexOf($route.name) > -1)" />
     <router-view />
   </div>
 </template>
@@ -9,17 +9,6 @@ import header from '@/components/header.vue';
 
 export default {
   components: { Header: header },
-  created() {
-    console.log(this.$route);
-    console.log(this.$router);
-  },
-  watch: {
-    $route() {
-      console.log('... change');
-    },
-  },
 };
 </script>
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

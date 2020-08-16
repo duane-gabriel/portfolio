@@ -4,6 +4,8 @@ import Home from '../views/Home.vue';
 import Resume from '../views/Resume.vue';
 import Projects from '../views/Projects.vue';
 import Login from '../views/Login.vue';
+import Admin from '../views/Admin.vue';
+import projects from '../components/projects.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +29,17 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    children: [
+      {
+        path: '',
+        component: projects,
+      },
+    ],
   },
 ];
 
