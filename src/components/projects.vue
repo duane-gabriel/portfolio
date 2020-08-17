@@ -1,53 +1,108 @@
 <template>
-  <div class="Projects">
-    <form @submit.prevent="sendData" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="project_name">Nome</label>
-        <input type="text" class="form-control" id="project_name" />
-      </div>
-      <div class="form-group">
-        <label for="project_desc">Descrição</label>
-        <textarea class="form-control" id="project_desc" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="project_desc">Data de criação</label>
-      </div>
-      <div class="form-group">
-        <label for="project_link">Link do preview</label>
-        <input type="text" class="form-control" id="project_link" />
-      </div>
-      <div class="form-group">
-        <div id="images"></div>
-      </div>
-      <div class="form-group">
-        <label for="project_files">Arquivos</label>
-        <input type="file" name="files" class="form-control-file" multiple id="project_files" />
-      </div>
-      <div class="form-group d-flex justify-content-end">
-        <button class="btn btn-success">Add projeto</button>
-      </div>
-    </form>
+  <div class="Projects w-100">
+    <div class="row w-100">
+      <form enctype="multipart/form-data" class="w-100">
+        <div class="form-group">
+          <label for="project_name">Nome</label>
+          <input type="text" v-model="project.name" class="form-control" id="project_name" />
+        </div>
+        <div class="form-group">
+          <label for="project_desc">Descrição</label>
+          <textarea class="form-control" v-model="project.description"
+          id="project_desc" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="project_desc">Data de criação</label>
+        </div>
+        <div class="form-group">
+          <label for="project_link">Link do preview</label>
+          <input type="text" class="form-control" id="project_link" v-model="project.link" />
+        </div>
+        <div class="form-group">
+          <div id="images"></div>
+        </div>
+        <div class="form-group">
+          <label for="project_files" class="btn btn-info">Upload de anexos</label>
+          <input
+            type="file"
+            name="files"
+            class="form-control-file"
+            multiple
+            id="project_files"
+            style="display: none;"
+          />
+        </div>
+        <div class="form-group d-flex justify-content-end">
+          <button @click.prevent="sendData()" class="btn btn-success">Add projeto</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      files: [],
+      project: {},
+    };
+  },
   methods: {
-    sendData(e) {
-      console.log(e);
+    async sendData() {
+      this.project.files = this.files;
+      this.project.date = 1597338676418;
+
+      const data = new FormData();
+
+      data.append('name', this.project.name);
+      data.append('description', this.project.description);
+      data.append('date', this.project.date);
+      data.append('link', this.project.link);
+
+      this.files.forEach((file) => data.append('files', file));
+
+      this.$http
+        .post('projects', data, {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNTk3NjI4NzU4LCJleHAiOjE1OTgyMzM1NTh9.tOMGvbgArYaU7X2I3BQANNMgoFHKkHoTuLgoT2arRZQ',
+          },
+        })
+        // .then((r) => r.json())
+        .then((re) => console.log(re))
+        .catch((e) => console.log(e));
     },
   },
   mounted() {
-    const files = document.getElementById('project_files');
+    console.log(this.$route.name);
+    const Files = document.getElementById('project_files');
     const images = document.querySelector('#images');
 
-    files.onchange = (e) => {
-      console.log(e.target.files);
+    const that = this;
+    Files.onchange = (e) => {
+      that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
       e.target.files.forEach((file, index) => {
-        const img = images.appendChild(document.createElement('img'));
-        const id = `image${index}`;
-        img.setAttribute('id', id);
-        document.getElementById(id).src = URL.createObjectURL(file);
+        const html = document.createElement('div');
+
+        html.innerHTML = `
+        <span id="close${index}" data-index="${index}">
+          <i class="fas fa-times"></i>
+        </span>
+        <img src="${URL.createObjectURL(file)}" id="image${index}"/>
+        `;
+
+        images.appendChild(html);
+        const el = document.querySelector(`#close${index}`);
+
+        el.addEventListener('click', function () {
+          const i = this.getAttribute('data-index');
+          this.parentNode.remove();
+          const arr = Array.from(that.files);
+          arr.splice(i, 1);
+          that.files = arr;
+          console.log(that.files);
+        });
       });
     };
   },
@@ -57,12 +112,29 @@ export default {
 <style lang="scss">
 .Projects {
   #images {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      position: relative;
+    }
     img {
-      max-width: 200px;
-      max-height: 150px;
+      max-width: 300px;
+      max-height: 200px;
       width: auto;
       height: auto;
       margin: 10px;
+      position: relative;
+    }
+    span {
+      font-size: 18px;
+      color: red;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      z-index: 2;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }
