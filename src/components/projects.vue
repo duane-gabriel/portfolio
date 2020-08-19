@@ -8,11 +8,16 @@
         </div>
         <div class="form-group">
           <label for="project_desc">Descrição</label>
-          <textarea class="form-control" v-model="project.description"
-          id="project_desc" rows="3"></textarea>
+          <textarea
+            class="form-control"
+            v-model="project.description"
+            id="project_desc"
+            rows="3"
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="project_desc">Data de criação</label>
+          <datepicker :language="pt" v-model="project.date" />
         </div>
         <div class="form-group">
           <label for="project_link">Link do preview</label>
@@ -41,17 +46,24 @@
 </template>
 
 <script>
+import datepicker from 'vuejs-datepicker';
+import { ptBR } from 'vuejs-datepicker/dist/locale';
+import axios from 'axios';
+
 export default {
+  components: {
+    datepicker,
+  },
   data() {
     return {
       files: [],
       project: {},
+      pt: ptBR,
     };
   },
   methods: {
     async sendData() {
-      this.project.files = this.files;
-      this.project.date = 1597338676418;
+      this.project.date = new Date(this.project.date).getTime();
 
       const data = new FormData();
 
@@ -62,14 +74,8 @@ export default {
 
       this.files.forEach((file) => data.append('files', file));
 
-      this.$http
-        .post('projects', data, {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNTk3NjI4NzU4LCJleHAiOjE1OTgyMzM1NTh9.tOMGvbgArYaU7X2I3BQANNMgoFHKkHoTuLgoT2arRZQ',
-          },
-        })
-        // .then((r) => r.json())
+      axios
+        .post('http://localhost:3000/projects', data)
         .then((re) => console.log(re))
         .catch((e) => console.log(e));
     },
@@ -111,6 +117,19 @@ export default {
 
 <style lang="scss">
 .Projects {
+  .vdp-datepicker {
+    input {
+      color: #495057;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      padding: 5px 20px;
+      &:focus {
+        border: 1px solid $main_color !important;
+      }
+    }
+  }
   #images {
     display: flex;
     flex-wrap: wrap;

@@ -14,8 +14,8 @@
               <i class="fas fa-user"></i>
             </div>
             <div>
-              <h5>usuário</h5>
-              <input class="input" type="text" />
+              <h5>e-mail</h5>
+              <input v-model="user.email" class="input" type="email" />
             </div>
           </div>
           <div class="input-div two">
@@ -24,11 +24,10 @@
             </div>
             <div>
               <h5>senha</h5>
-              <input class="input" type="password" />
+              <input class="input" v-model="user.password" type="password" />
             </div>
           </div>
-          <input @click.prevent="login" type="submit" class="btn" value="Entrar">
-
+          <input @click.prevent="login" type="submit" class="btn" value="Entrar" />
         </form>
       </div>
     </div>
@@ -37,6 +36,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      user: {},
+    };
+  },
   mounted() {
     const inputs = document.querySelectorAll('.input');
 
@@ -59,14 +63,19 @@ export default {
   },
   methods: {
     login() {
-      console.log('login');
+      this.user.name = 'Duane';
+      this.user.username = 'dfaria';
+
+      this.$store.dispatch('LOGIN', { credentials: this.user }).then(() => {
+        this.$router.push({ name: 'Admin.projects' });
+      });
     },
   },
 };
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 * {
   padding: 0;
@@ -75,7 +84,7 @@ export default {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .wave {
@@ -138,7 +147,7 @@ form h2 {
 
 .input-div:after,
 .input-div:before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -2px;
   width: 0;
@@ -218,7 +227,7 @@ form h2 {
   background: none;
   padding: 0.5rem 0.7rem;
   font-size: 1.2rem;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #555;
 }
 
@@ -247,7 +256,7 @@ a:hover {
   background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
   cursor: pointer;
   color: #fff;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-size: 200%;
   transition: 0.5s;
 }

@@ -6,6 +6,7 @@ import Projects from '../views/Projects.vue';
 import Login from '../views/Login.vue';
 import Admin from '../views/Admin.vue';
 import projects from '../components/projects.vue';
+import tags from '../components/tags.vue';
 
 Vue.use(VueRouter);
 
@@ -34,20 +35,36 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: '',
         component: projects,
         name: 'Admin.projects',
       },
+      {
+        path: 'tags',
+        component: tags,
+        name: 'Admin.tags',
+      },
     ],
   },
 ];
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+router.beforeEach((to, from, next) => {
+  const state = localStorage.getItem('vuex');
+  const loggedIn = JSON.parse(state);
+  if (loggedIn.user.token) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router;
