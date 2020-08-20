@@ -57,14 +57,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-router.beforeEach((to, from, next) => {
-  const state = localStorage.getItem('vuex');
-  const loggedIn = JSON.parse(state);
-  if (loggedIn.user.token) {
-    next('/');
-  } else {
-    next();
-  }
-});
+
+// router.beforeEach((to, from, next) => {
+//   const state = localStorage.getItem('vuex');
+//   const loggedIn = JSON.parse(state);
+//   if (loggedIn.user.token) {
+//     next('/');
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

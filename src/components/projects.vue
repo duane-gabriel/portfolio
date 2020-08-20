@@ -27,6 +27,17 @@
           <div id="images"></div>
         </div>
         <div class="form-group">
+          <label for="project_tag">Tecnologias utilizadas</label>
+          <VueTagsInput
+            v-model="project.tag"
+            @tags-changed="(newTags) => (tags = newTags)"
+            :tags="tags"
+            :autocomplete-items="filteredItems"
+            id="project_tag"
+            style="width: 100%;"
+          />
+        </div>
+        <div class="form-group">
           <label for="project_files" class="btn btn-info">Upload de anexos</label>
           <input
             type="file"
@@ -36,6 +47,20 @@
             id="project_files"
             style="display: none;"
           />
+        </div>
+        <div class="form-group">
+          <ul>
+            <li
+              class="d-flex justify-content-between mb-1"
+              v-for="file of files"
+              :key="file.name + Math.random()"
+            >
+              <span class="btn btn-link p-0">
+                {{ file.name }}
+              </span>
+              <i class="fas fa-times close" @click="removeFile(file.name)"></i>
+            </li>
+          </ul>
         </div>
         <div class="form-group d-flex justify-content-end">
           <button @click.prevent="sendData()" class="btn btn-success">Add projeto</button>
@@ -48,17 +73,37 @@
 <script>
 import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
-import axios from 'axios';
-
+import VueTagsInput from '@johmun/vue-tags-input';
+/*eslint-disable */
 export default {
   components: {
     datepicker,
+    VueTagsInput,
   },
   data() {
     return {
       files: [],
-      project: {},
+      project: { tag: '' },
       pt: ptBR,
+
+      tags: [],
+      autocompleteItems: [
+        {
+          text: 'Spain',
+        },
+        {
+          text: 'France',
+        },
+        {
+          text: 'USA',
+        },
+        {
+          text: 'Germany',
+        },
+        {
+          text: 'China',
+        },
+      ],
     };
   },
   methods: {
@@ -73,52 +118,80 @@ export default {
       data.append('link', this.project.link);
 
       this.files.forEach((file) => data.append('files', file));
-
-      axios
-        .post('http://localhost:3000/projects', data)
-        .then((re) => console.log(re))
-        .catch((e) => console.log(e));
+      this.$store.dispatch('saveProject', { project: data });
+    },
+    removeFile(name) {
+      this.files = this.files.filter((file) => file.name !== name);
     },
   },
   mounted() {
-    console.log(this.$route.name);
     const Files = document.getElementById('project_files');
     const images = document.querySelector('#images');
 
     const that = this;
     Files.onchange = (e) => {
       that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
-      e.target.files.forEach((file, index) => {
-        const html = document.createElement('div');
+      // e.target.files.forEach((file, index) => {
+      //   const html = document.createElement('div');
 
-        html.innerHTML = `
-        <span id="close${index}" data-index="${index}">
-          <i class="fas fa-times"></i>
-        </span>
-        <img src="${URL.createObjectURL(file)}" id="image${index}"/>
-        `;
+      //   html.innerHTML = `
+      //   <span id="close${index}" data-index="${index}">
+      //     <i class="fas fa-times"></i>
+      //   </span>
+      //   <img src="${URL.createObjectURL(file)}" id="image${index}"/>
+      //   `;
 
-        images.appendChild(html);
-        const el = document.querySelector(`#close${index}`);
+      //   images.appendChild(html);
+      //   const el = document.querySelector(`#close${index}`);
 
-        el.addEventListener('click', function () {
-          const i = this.getAttribute('data-index');
-          this.parentNode.remove();
-          const arr = Array.from(that.files);
-          arr.splice(i, 1);
-          that.files = arr;
-          console.log(that.files);
-        });
-      });
+      //   el.addEventListener('click', function () {
+      //     const i = this.getAttribute('data-index');
+      //     this.parentNode.remove();
+      //     const arr = Array.from(that.files);
+      //     arr.splice(i, 1);
+      //     that.files = arr;
+      //     console.log(that.files);
+      //   });
+      // });
     };
+  },
+  computed: {
+    filteredItems() {
+      return this.autocompleteItems.filter(
+        (i) => i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
+      );
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.vue-tags-input {
+  max-width: unset !important;
+  .ti-input {
+    border-radius: 3px;
+  }
+  input {
+    border-radius: 5px;
+  }
+}
 .Projects {
+  .close {
+    font-size: 20px;
+    color: red;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .vue-tags-input {
+    border-radius: 5px;
+  }
+  .vue-tags-input.ti-focus .ti-input {
+    border: 1px solid $main_color;
+  }
   .vdp-datepicker {
-    input {
+    input,
+    .vue-tags-input .ti-input {
       color: #495057;
       background-color: #fff;
       background-clip: padding-box;

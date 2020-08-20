@@ -32,6 +32,12 @@ export default new Vuex.Store({
         .post('http://localhost:3000/session', payLoad.credentials)
         .then(({ data }) => commit('SET_USER_DATA', { data }));
     },
+    saveProject(context, { project }) {
+      axios
+        .post('http://localhost:3000/projects', project)
+        .then()
+        .catch((e) => console.log(e));
+    },
   },
   modules: {},
   plugins: [vuexLocal.plugin],
