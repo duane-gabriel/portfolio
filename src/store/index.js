@@ -1,18 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist';
 import axios from 'axios';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
-
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-});
 
 export default new Vuex.Store({
   state: {
     menuIsActive: 'home',
     user: null,
+    files: [],
   },
   mutations: {
     setMenu(state, { payLoad }) {
@@ -21,6 +18,11 @@ export default new Vuex.Store({
     SET_USER_DATA(state, payLoad) {
       state.user = payLoad.data.user;
       axios.defaults.headers.common.Authorization = `Bearer ${state.user.token}`;
+    },
+    CLEAR_USER_DATA(state) {
+      state.user = null;
+      localStorage.removeItem('vuex');
+      location.reload(); /*eslint-disable-line*/
     },
   },
   actions: {
@@ -38,7 +40,10 @@ export default new Vuex.Store({
         .then()
         .catch((e) => console.log(e));
     },
+    logout({ commit }) {
+      commit('CLEAR_USER_DATA');
+    },
   },
   modules: {},
-  plugins: [vuexLocal.plugin],
+  plugins: [createPersistedState()],
 });

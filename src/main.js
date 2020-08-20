@@ -7,6 +7,18 @@ import router from './router';
 import store from './store';
 import './axios';
 
+Vue.directive('click-outside', {
+  bind() {
+    this.event = (event) => this.vm.$emit(this.expression, event);
+    this.el.addEventListener('click', this.stopProp);
+    document.body.addEventListener('click', this.event);
+  },
+
+  stopProp(event) {
+    event.stopPropagation();
+  },
+});
+
 library.add(faUserSecret);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

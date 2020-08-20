@@ -52,10 +52,10 @@
           <ul>
             <li
               class="d-flex justify-content-between mb-1"
-              v-for="file of files"
+              v-for="(file, index) of files"
               :key="file.name + Math.random()"
             >
-              <span class="btn btn-link p-0">
+              <span class="btn btn-link p-0" @click="$emit('visible', index)">
                 {{ file.name }}
               </span>
               <i class="fas fa-times close" @click="removeFile(file.name)"></i>
@@ -82,6 +82,8 @@ export default {
   },
   data() {
     return {
+      visible: false,
+      tabs: 0,
       files: [],
       project: { tag: '' },
       pt: ptBR,
@@ -124,6 +126,11 @@ export default {
       this.files = this.files.filter((file) => file.name !== name);
     },
   },
+  watch: {
+    files() {
+      this.$store.state.files = this.files;
+    },
+  },
   mounted() {
     const Files = document.getElementById('project_files');
     const images = document.querySelector('#images');
@@ -131,29 +138,12 @@ export default {
     const that = this;
     Files.onchange = (e) => {
       that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
-      // e.target.files.forEach((file, index) => {
-      //   const html = document.createElement('div');
 
-      //   html.innerHTML = `
-      //   <span id="close${index}" data-index="${index}">
-      //     <i class="fas fa-times"></i>
-      //   </span>
-      //   <img src="${URL.createObjectURL(file)}" id="image${index}"/>
-      //   `;
-
-      //   images.appendChild(html);
-      //   const el = document.querySelector(`#close${index}`);
-
-      //   el.addEventListener('click', function () {
-      //     const i = this.getAttribute('data-index');
-      //     this.parentNode.remove();
-      //     const arr = Array.from(that.files);
-      //     arr.splice(i, 1);
-      //     that.files = arr;
-      //     console.log(that.files);
-      //   });
-      // });
+      that.files.forEach((file) => {
+        file.src = URL.createObjectURL(file);
+      });
     };
+    // document.querySelector('body').addEventListener('click', () => that.$emit('visible', false));
   },
   computed: {
     filteredItems() {
