@@ -60,8 +60,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = JSON.parse(localStorage.getItem('vuex'));
-  if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn.user) {
-    next('/');
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!loggedIn.user) {
+      next('/login');
+    } else {
+      next();
+    }
   } else {
     next();
   }

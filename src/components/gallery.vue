@@ -19,7 +19,7 @@
       href="#carouselExampleControls"
       role="button"
       data-slide="prev"
-      v-if="images.length > 1"
+      v-if="images.length > 1 && images[this.activeIndex - 1]"
       @click="nav(-1)"
     >
       <i class="fas fa-angle-left icon"></i>
@@ -30,7 +30,7 @@
       href="#carouselExampleControls"
       role="button"
       data-slide="next"
-      v-if="images.length > 1"
+      v-if="images.length > 1 && images[this.activeIndex + 1]"
       @click="nav(+1)"
     >
       <i class="fas fa-angle-right icon"></i>
@@ -41,10 +41,10 @@
 
 <script>
 export default {
-  props: ['images', 'visible'],
+  props: ['images', 'visible', 'activeIndex'],
   data() {
     return {
-      activeIndex: 0,
+      // activeIndex: 0,
     };
   },
   methods: {

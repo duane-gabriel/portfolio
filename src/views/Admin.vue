@@ -13,8 +13,8 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              >Duane Faria</a
-            >
+              style="color:#000;"
+            >Duane Faria</a>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="#" @click="$store.dispatch('logout')">Sair</a>
@@ -28,13 +28,13 @@
         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
           <menu-admin />
         </div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 border bg-white rounded p-5 w-100">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 border bg-white rounded w-100">
           <router-view @visible="index = $event + '_' + Math.random()" />
         </div>
       </div>
     </div>
     <div class="container-gallery" v-if="visible && $store.state.files.length > 0">
-      <gallery id="gallery" :images="$store.state.files" :visible="visible" />
+      <gallery id="gallery" :images="$store.state.files" :visible="visible" :activeIndex="index" />
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       visible: false,
-      index: null,
+      index: 0,
     };
   },
   mounted() {

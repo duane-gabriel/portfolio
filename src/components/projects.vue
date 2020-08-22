@@ -1,7 +1,17 @@
 <template>
   <div class="Projects w-100">
-    <div class="row w-100">
-      <form enctype="multipart/form-data" class="w-100">
+    <div class="header d-flex justify-content-between align-items-center">
+      <span class="ml-4">{{ !mode ? 'Criação do projeto' : 'Listagem de projetos' }}</span>
+      <button
+        class="btn btn-outline-primary mr-4"
+        style="padding: 5px; height: 35px; font-size: 13px;"
+        @click="mode = !mode"
+      >
+        {{ !mode ? 'Listar projetos' : 'Cadastrar projeto' }}
+      </button>
+    </div>
+    <div class="row my-3 mx-4">
+      <form enctype="multipart/form-data" class="w-100" v-if="!mode">
         <div class="form-group">
           <label for="project_name">Nome</label>
           <input type="text" v-model="project.name" class="form-control" id="project_name" />
@@ -55,9 +65,7 @@
               v-for="(file, index) of files"
               :key="file.name + Math.random()"
             >
-              <span class="btn btn-link p-0" @click="$emit('visible', index)">
-                {{ file.name }}
-              </span>
+              <span class="btn btn-link p-0" @click="$emit('visible', index)">{{ file.name }}</span>
               <i class="fas fa-times close" @click="removeFile(file.name)"></i>
             </li>
           </ul>
@@ -66,6 +74,7 @@
           <button @click.prevent="sendData()" class="btn btn-success">Add projeto</button>
         </div>
       </form>
+      <projects-list v-if="mode" @change="alterMode()" />
     </div>
   </div>
 </template>
@@ -74,11 +83,14 @@
 import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
+import projectsList from '@/components/project_list.vue';
+
 /*eslint-disable */
 export default {
   components: {
     datepicker,
     VueTagsInput,
+    projectsList,
   },
   data() {
     return {
@@ -87,7 +99,7 @@ export default {
       files: [],
       project: { tag: '' },
       pt: ptBR,
-
+      mode: false,
       tags: [],
       autocompleteItems: [
         {
@@ -125,6 +137,9 @@ export default {
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
     },
+    alterMode() {
+      this.mode = false;
+    },
   },
   watch: {
     files() {
@@ -143,7 +158,6 @@ export default {
         file.src = URL.createObjectURL(file);
       });
     };
-    // document.querySelector('body').addEventListener('click', () => that.$emit('visible', false));
   },
   computed: {
     filteredItems() {
@@ -166,6 +180,13 @@ export default {
   }
 }
 .Projects {
+  .header {
+    background: #f8f9fa;
+    height: 50px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-bottom: 1px solid #d5d5d5;
+  }
   .close {
     font-size: 20px;
     color: red;

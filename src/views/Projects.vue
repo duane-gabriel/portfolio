@@ -31,7 +31,7 @@
 
 <script>
 /* eslint-disable */
-import modalProject from "@/components/modal-project.vue";
+import modalProject from '@/components/modal-project.vue';
 export default {
   components: { modalProject },
   data() {
@@ -39,30 +39,30 @@ export default {
       data: {},
       cards: [
         {
-          title: "Github searcher com Reacjs",
-          tecnologies: ["React", "React router", "Redux"],
-          description: "Um projeto com o intuito...",
-          date: "10/10/10",
-          preview: "https://www.google.com.br",
+          title: 'Github searcher com Reacjs',
+          tecnologies: ['React', 'React router', 'Redux'],
+          description: 'Um projeto com o intuito...',
+          date: '10/10/10',
+          preview: 'https://www.google.com.br',
           content: `<img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
           <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>`
-        }
+          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>`,
+        },
       ],
-      visible: false
+      visible: false,
     };
   },
   methods: {
     imgHover(id, option) {
-      const overlays = document.getElementsByClassName("img-overlay");
+      const overlays = document.getElementsByClassName('img-overlay');
       // console.log(overlays);
-      overlays.forEach(overlay => overlay.classList.remove("visible"));
+      overlays.forEach((overlay) => overlay.classList.remove('visible'));
 
       // const className = document.getElementsByClassName(id)[0];
 
-      if (option === "over") {
+      if (option === 'over') {
         // className.classList.add('visible');
         // return;
       }
@@ -71,8 +71,8 @@ export default {
     openModal(data) {
       this.visible = true;
       this.data = data;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -83,9 +83,10 @@ header {
   height: 120px;
   border-top-left-radius: $border_radius;
   border-top-right-radius: $border_radius;
+  margin: 0 15px;
 }
 h1 {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 h2 {
   font-size: 1.5rem;

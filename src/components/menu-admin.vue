@@ -57,15 +57,12 @@ export default {
 .Menu-admin {
   li.list-group-item:hover,
   .active {
-    outline: none;
-    border-color: #000;
-    cursor: pointer;
+    outline: none !important;
+    border-color: #000 !important;
+    cursor: pointer !important;
     background-color: $main_color;
-    span,
-    i {
-      color: #fff;
-    }
   }
+
   span {
     i {
       font-size: 15px;

@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+
 $border_radius: 15px;
 $main_color: #02c39a;
+
+$primary: $main_color !default;
+
+@import '../../../node_modules/bootstrap';
 
 * {
   padding: 0;
@@ -16,7 +21,11 @@ $main_color: #02c39a;
   outline: 0;
   box-shadow: unset;
 }
-
+.btn,
+input,
+textarea {
+  border-radius: 5px !important;
+}
 html,
 body,
 #app {
@@ -48,4 +57,7 @@ div.container {
   padding: 0;
   box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
+  // max-width: ;
 }
+
+// @import '../../../node_modules/bootstrap/scss/bootstrap.scss';

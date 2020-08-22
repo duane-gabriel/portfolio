@@ -9,30 +9,44 @@
       <div class="row pl-lg-4 pl-3 pr-3">
         <div class="pt-4 pl-0 pl-sm-1 pl-md-4 pl-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <h2 class="font-weight-normal">Educação</h2>
-            <timeline-item :data="education"/>
+          <timeline-item :data="education" />
         </div>
         <div class="pt-4 pr-0 pr-sm-1 pr-md-4 pr-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <h2 class="font-weight-normal">Experiência</h2>
-            <timeline-item :data="expirience"/>
+          <timeline-item :data="expirience" />
         </div>
       </div>
       <div class="row" v-if="showSkills">
-        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column
-        align-items-center
-        justify-content-center">
-          <h2 class="font-weight-normal mb-3">Backend <span class="text-primary">Skills</span></h2>
-          <progressBar :data="back" v-for="back of backend" :key="Math.random()+back.title"/>
+        <div
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column
+          align-items-center justify-content-center"
+        >
+          <h2 class="font-weight-normal mb-3">
+            Backend
+            <span class="text-primary">Skills</span>
+          </h2>
+          <progressBar :data="back" v-for="back of backend" :key="Math.random()+back.title" />
         </div>
-        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
-        d-flex flex-column        align-items-center        justify-content-center">
-          <h2 class="font-weight-normal mb-3">Frontend <span class="text-primary">Skills</span></h2>
-          <progressBar :data="front" v-for="front of frontend" :key="Math.random()+front.title"/>
+        <div
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
+          d-flex flex-column align-items-center justify-content-center"
+        >
+          <h2 class="font-weight-normal mb-3">
+            Frontend
+            <span class="text-primary">Skills</span>
+          </h2>
+          <progressBar :data="front" v-for="front of frontend" :key="Math.random()+front.title" />
         </div>
-        <div class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex
-        justify-content-center d-flex flex-column align-items-center justify-content-center">
-          <h2 class="font-weight-normal  mb-3">Others <span class="text-primary">Skills</span></h2>
-          <progressBar :data="other" v-for="other of others" :key="Math.random()+other.title"/>
-
+        <div
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
+           d-flex justify-content-center
+          d-flex flex-column align-items-center justify-content-center"
+        >
+          <h2 class="font-weight-normal mb-3">
+            Others
+            <span class="text-primary">Skills</span>
+          </h2>
+          <progressBar :data="other" v-for="other of others" :key="Math.random()+other.title" />
         </div>
       </div>
     </div>
@@ -53,13 +67,15 @@ export default {
           title: 'Curso técnico em informática',
           year: 'Jan 2015 - Dec 2017',
           institution: 'Centro Paula Souza (Etec)',
-          description: 'Curso técnico em informática com ênfase em programação.',
+          description:
+            'Curso técnico em informática com ênfase em programação.',
         },
         {
           title: 'Engenharia da Computação',
           year: 'Jan 2018 - Atualmente',
           institution: 'Centro Universitário Eniac',
-          description: 'Atualmente cursando o terceiro ano de engenharia da computação.',
+          description:
+            'Atualmente cursando o terceiro ano de engenharia da computação.',
         },
       ],
       expirience: [
@@ -67,19 +83,22 @@ export default {
           title: 'Programador',
           year: 'Set 2018 - Mai 2020',
           institution: 'maicrosôfté',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
         },
         {
           title: 'Programador',
           year: 'Set 2018 - Mai 2020',
           institution: 'maicrosôfté',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
         },
         {
           title: 'Programador',
           year: 'Set 2018 - Mai 2020',
           institution: 'maicrosôfté',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
         },
       ],
       // expirience: [
@@ -149,7 +168,7 @@ export default {
 <style scoped lang="scss">
 .resume {
   h1 {
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   header {
     background-color: $main_color !important;
@@ -157,18 +176,19 @@ export default {
     height: 120px;
     border-top-left-radius: $border_radius;
     border-top-right-radius: $border_radius;
+    margin:0 15px;
   }
   h2 {
     font-size: 1.5rem;
   }
-  .container{
+  .container {
     height: 900px !important;
     margin-bottom: 50px;
   }
-  @media(max-width:500px){
-    .container{
+  @media (max-width: 500px) {
+    .container {
       height: auto !important;
-      padding-bottom:20px;
+      padding-bottom: 20px;
     }
   }
 }
