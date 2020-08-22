@@ -17,9 +17,9 @@
           <td>{{ p.name }}</td>
           <td>{{ p.date }}</td>
           <td>{{ p.link }}</td>
-          <td @click="alter">
-            <i class="fas fa-pencil-alt icon rounded" style="background: green;"> </i
-            ><i class="far fa-trash-alt icon rounded" style="background: tomato;"></i>
+          <td @click="alter(p)">
+            <i class="fas fa-pencil-alt icon rounded" style="background: green;"></i>
+            <i class="far fa-trash-alt icon rounded" style="background: tomato;"></i>
           </td>
         </tr>
       </tbody>
@@ -28,14 +28,18 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '@/services/api';
 /*eslint-disable */
 export default {
   data() {
     return {
       columns: [
         { label: 'id', field: 'id' },
-        { label: 'nome', field: 'name', headerClass: 'class-in-header second-class' },
+        {
+          label: 'nome',
+          field: 'name',
+          headerClass: 'class-in-header second-class',
+        },
         { label: 'data', field: 'date' },
         { label: 'link', field: 'link' },
       ],
@@ -47,26 +51,20 @@ export default {
   },
   methods: {
     requestProjects() {
-      axios
-        .get('http://localhost:3000/projects', null, {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.user.token}`,
-          },
-        })
-        .then(({ data }) => {
-          data.sort((a, b) => {
-            if (a.id > b.id) {
-              return 1;
-            }
-            if (a.id < b.id) {
-              return -1;
-            }
-          });
-          this.projects = data;
+      api.get('projects').then(({ data }) => {
+        data.sort((a, b) => {
+          if (a.id > b.id) {
+            return 1;
+          }
+          if (a.id < b.id) {
+            return -1;
+          }
         });
+        this.projects = data;
+      });
     },
-    alter() {
-      this.$emit('change', false);
+    alter(project) {
+      this.$emit('change', project);
     },
   },
 };

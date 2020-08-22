@@ -1,14 +1,14 @@
 <template>
   <div class="Projects w-100">
     <div class="header d-flex justify-content-between align-items-center">
-      <span class="ml-4">{{ !mode ? 'Criação do projeto' : 'Listagem de projetos' }}</span>
+      <span class="ml-4" v-if="!mode && buttonText !=='Edit project'">Criação do projeto</span>
+      <span class="ml-4" v-if="mode && buttonText !=='Edit project'">Listagem de projetos</span>
+      <span class="ml-4" v-else-if="buttonText ==='Edit project'">Edição do projeto</span>
       <button
         class="btn btn-outline-primary mr-4"
         style="padding: 5px; height: 35px; font-size: 13px;"
         @click="mode = !mode"
-      >
-        {{ !mode ? 'Listar projetos' : 'Cadastrar projeto' }}
-      </button>
+      >{{ !mode ? 'Listar projetos' : 'Cadastrar projeto' }}</button>
     </div>
     <div class="row my-3 mx-4">
       <form enctype="multipart/form-data" class="w-100" v-if="!mode">
@@ -18,12 +18,7 @@
         </div>
         <div class="form-group">
           <label for="project_desc">Descrição</label>
-          <textarea
-            class="form-control"
-            v-model="project.description"
-            id="project_desc"
-            rows="3"
-          ></textarea>
+          <textarea class="form-control" v-model="project.description" id="project_desc" rows="3"></textarea>
         </div>
         <div class="form-group">
           <label for="project_desc">Data de criação</label>
@@ -71,10 +66,10 @@
           </ul>
         </div>
         <div class="form-group d-flex justify-content-end">
-          <button @click.prevent="sendData()" class="btn btn-success">Add projeto</button>
+          <button @click.prevent="sendData()" class="btn btn-success">{{buttonText}}</button>
         </div>
       </form>
-      <projects-list v-if="mode" @change="alterMode()" />
+      <projects-list v-if="mode" @change="alterMode($event)" />
     </div>
   </div>
 </template>
@@ -94,6 +89,7 @@ export default {
   },
   data() {
     return {
+      buttonText: 'Add projeto',
       visible: false,
       tabs: 0,
       files: [],
@@ -137,8 +133,13 @@ export default {
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
     },
-    alterMode() {
+    alterMode(project) {
+      this.project = project;
+      this.project.tag = '';
+      this.project.date = new Date(this.project.dateClean);
+      this.files = this.project.Files;
       this.mode = false;
+      this.buttonText = 'Edit project';
     },
   },
   watch: {
@@ -162,7 +163,8 @@ export default {
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter(
-        (i) => i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
+        (i) =>
+          i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
       );
     },
   },

@@ -3,7 +3,7 @@
     <form>
       <div class="form-group">
         <label for="tag_name">Nome</label>
-        <input type="text" v-model="name" class="form-control" id="tag_name" />
+        <input type="text" v-model="tag.name" class="form-control" id="tag_name" />
       </div>
       <div class="form-group d-flex justify-content-end">
         <button type="button" @click.prevent="saveTag" class="btn btn-success">{{buttonText}}</button>
@@ -23,7 +23,7 @@
           <td>{{ t.name }}</td>
           <td>
             <i
-              @click="editMode(t)"
+              @click="editTag(t)"
               class="fas fa-pencil-alt icon rounded"
               style="background: green;"
             ></i>
@@ -41,48 +41,48 @@
 
 <script>
 /*eslint-disable */
-import axios from 'axios';
 import api from '@/services/api';
+import dao from '@/services/dao';
 export default {
   data() {
     return {
-      name: '',
+      tag: { name: '' },
       tags: [],
       buttonText: 'Add tag',
     };
   },
   mounted() {
-    api.get('technologies').then(({ data }) => (this.tags = data));
+    dao.url = 'technologies';
+    dao.headers = {
+      'Content-type': 'application/json',
+    };
+    dao.get().then(({ data }) => (this.tags = data));
   },
   methods: {
     saveTag() {
-      const { name } = this;
-      api
-        .post(
-          'technologies',
-          { name },
-          {
-            headers: {
-              'Content-type': 'application/json',
-            },
-          }
-        )
-        .then(({ data }) => {
-          this.tags = [...this.tags, data];
-          this.name = '';
+      const { name } = this.tag;
+      if (this.buttonText == 'Edit tag') {
+        const tag = this.tag;
+        dao.put(tag).then(({ data: id }) => {
+          const i = this.tags.findIndex((t) => t.id === id);
+          this.tags[i].name = tag.name;
         });
+        this.tag = {};
+        this.buttonText = 'Add tag';
+        return;
+      }
+      dao.post({ name }).then(({ data }) => {
+        this.tags = [...this.tags, data];
+        this.tag.name = '';
+      });
     },
-    editMode(tag) {
-      this.name = tag.name;
+    editTag(tag) {
+      this.tag = { ...tag };
       this.buttonText = 'Edit tag';
     },
     deleteTag(tag) {
-      api
-        .delete(`technologies/${tag.id}`, {
-          headers: {
-            'Content-type': 'application/json',
-          },
-        })
+      dao
+        .delete(tag.id)
         .then(
           ({ data }) => (this.tags = this.tags.filter((t) => t.id !== tag.id))
         );
