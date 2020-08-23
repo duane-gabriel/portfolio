@@ -9,33 +9,32 @@
         <button type="button" @click.prevent="saveTag" class="btn btn-success">{{buttonText}}</button>
       </div>
     </form>
-    <table class="table table-striped w-100">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="t of tags" :key="t.id">
-          <th scope="row">{{ t.id }}</th>
-          <td>{{ t.name }}</td>
-          <td>
+    <div class="wrap-table100">
+      <div class="table">
+        <div class="row header bg-primary">
+          <div class="cell">Id</div>
+          <div class="cell">Nome</div>
+          <div class="cell">Ações</div>
+        </div>
+
+        <div class="row" v-for="t of tags" :key="t.id">
+          <div class="cell">{{ t.id }}</div>
+          <div class="cell" style="width:320px;">{{ t.name }}</div>
+          <div class="cell">
             <i
+              class="fas fa-pencil-alt icon rounded text-white"
               @click="editTag(t)"
-              class="fas fa-pencil-alt icon rounded"
               style="background: green;"
             ></i>
             <i
               @click="deleteTag(t)"
-              class="far fa-trash-alt icon rounded"
+              class="far fa-trash-alt icon rounded text-white"
               style="background: tomato;"
             ></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

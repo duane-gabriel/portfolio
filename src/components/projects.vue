@@ -95,12 +95,13 @@
 </template>
 
 <script>
+/*eslint-disable */
 import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
 import projectsList from '@/components/project_list.vue';
+import dao, { Api } from '@/services/dao';
 
-/*eslint-disable */
 export default {
   components: {
     datepicker,
@@ -124,18 +125,6 @@ export default {
         {
           text: 'Spain',
         },
-        {
-          text: 'France',
-        },
-        {
-          text: 'USA',
-        },
-        {
-          text: 'Germany',
-        },
-        {
-          text: 'China',
-        },
       ],
     };
   },
@@ -149,9 +138,15 @@ export default {
       data.append('description', this.project.description);
       data.append('date', this.project.date);
       data.append('link', this.project.link);
+      data.append('indexFileStar', this.fileStar.id);
+      this.tags.forEach((tag) => data.append('technologies', tag.text));
+      this.files.forEach((file, index) => {
+        data.append('files', file);
+      });
 
-      this.files.forEach((file) => data.append('files', file));
-      this.$store.dispatch('saveProject', { project: data });
+      Api.post('projects', data)
+        .then()
+        .catch((e) => console.log(e));
     },
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
@@ -165,7 +160,6 @@ export default {
       this.buttonText = 'Edit project';
     },
     setStar(index) {
-      // this.fileStar[index] = true;
       this.fileStar.id = index;
     },
   },

@@ -1,6 +1,8 @@
 /*eslint-disable */
 import api from './api';
 
+export const Api = api;
+
 export default {
   url: '',
   headers: null,
@@ -10,10 +12,10 @@ export default {
   post(data) {
     return api.post(
       this.url,
-      { ...data },
-      {
-        headers: this.headers,
-      }
+      { ...data }
+      // {
+      //   headers: this.headers,
+      // }
     );
   },
   put(data) {

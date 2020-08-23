@@ -18,14 +18,14 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
-  (config) => config,
-  function (error) {
-    const obj = { menuIsActive: 'home', user: null };
-    localStorage.setItem('vuex', JSON.stringify(obj));
-    location.reload();
-    return Promise.reject(error);
-  }
-);
+// api.interceptors.response.use(
+//   (config) => config,
+//   function (error) {
+//     const obj = { menuIsActive: 'home', user: null };
+//     localStorage.setItem('vuex', JSON.stringify(obj));
+//     location.reload();
+//     return Promise.reject(error);
+//   }
+// );
 
 export default api;
