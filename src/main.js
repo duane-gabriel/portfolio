@@ -2,7 +2,7 @@ import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import axios from 'axios';
+// import axios from 'axios';
 import { VuejsDatatableFactory } from 'vuejs-datatable';
 import App from './App.vue';
 import router from './router';
@@ -34,20 +34,20 @@ new Vue({
   router,
   store,
   created() {
-    const userString = localStorage.getItem('vuex');
-    if (userString) {
-      const userData = JSON.parse(userString);
-      this.$store.commit('SET_USER_DATA', { data: userData });
-    }
-    axios.interceptors.response.use(
-      (response) => response,
-      (err) => {
-        if (err) {
-          this.$store.dispatch('logout');
-        }
-        return Promise.reject(err);
-      },
-    );
+    // const userString = localStorage.getItem('vuex');
+    // if (userString) {
+    //   const userData = JSON.parse(userString);
+    //   this.$store.commit('SET_USER_DATA', { data: userData });
+    // }
+    // axios.interceptors.response.use(
+    //   (response) => response,
+    //   (err) => {
+    //     if (err) {
+    //       this.$store.dispatch('logout');
+    //     }
+    //     return Promise.reject(err);
+    //   },
+    // );
   },
   render: (h) => h(App),
 }).$mount('#app');
