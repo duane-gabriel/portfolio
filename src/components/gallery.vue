@@ -64,9 +64,16 @@ export default {
 .gallery {
   position: absolute;
   z-index: 10;
-  top: 200px;
-  left: 25%;
-  right: 25%;
+  top: 100px;
+  bottom: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  max-width: 1200px;
+  max-height: 1200px;
+  width: auto;
+  height: auto;
   .icon {
     font-size: 50px;
     color: #000;

@@ -61,7 +61,27 @@
               :key="file.name + Math.random()"
             >
               <span class="btn btn-link p-0" @click="$emit('visible', index)">{{ file.name }}</span>
-              <i class="fas fa-times close" @click="removeFile(file.name)"></i>
+              <div>
+                <i
+                  class="fas fa-star cursor-pointer"
+                  style="margin-top:-5px;margin-right: 5px;"
+                  :id="'starFull'+index"
+                  v-if="fileStar.id == index"
+                ></i>
+                <i
+                  @click="setStar(index)"
+                  class="far fa-star cursor-pointer"
+                  style="margin-top:-5px;margin-right: 5px;"
+                  :id="'starEmpty'+index"
+                  v-else
+                ></i>
+                <i
+                  class="fas fa-times close"
+                  @click="removeFile(file.name)"
+                  style="margin-top: 3px;
+"
+                ></i>
+              </div>
             </li>
           </ul>
         </div>
@@ -97,6 +117,9 @@ export default {
       pt: ptBR,
       mode: false,
       tags: [],
+      fileStar: {
+        id: 0,
+      },
       autocompleteItems: [
         {
           text: 'Spain',
@@ -141,10 +164,17 @@ export default {
       this.mode = false;
       this.buttonText = 'Edit project';
     },
+    setStar(index) {
+      // this.fileStar[index] = true;
+      this.fileStar.id = index;
+    },
   },
   watch: {
-    files() {
-      this.$store.state.files = this.files;
+    files: {
+      handler(val) {
+        this.$store.state.files = this.files;
+      },
+      deep: true,
     },
   },
   mounted() {
