@@ -96,7 +96,7 @@
 
 <script>
 /*eslint-disable */
-import dao from '@/services/dao';
+import dao, { Api } from '@/services/dao';
 import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
@@ -221,6 +221,10 @@ export default {
   }
 }
 .Projects {
+  height: auto;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
   .ti-selected-item,
   .ti-tag {
     background: $primary !important;
@@ -231,6 +235,8 @@ export default {
     margin-left: -15px;
     margin-right: -15px;
     border-bottom: 1px solid #d5d5d5;
+    border-top-right-radius: 05px;
+    border-top-left-radius: 05px;
   }
   .close {
     font-size: 20px;

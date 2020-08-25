@@ -1,7 +1,7 @@
 <template>
   <div class="Admin">
     <div class="menu bg-white shadow-sm">
-      <div class="container pt-3 d-flex justify-content-between">
+      <div class="container d-flex justify-content-between">
         <span class="h1 font-weight-normal">CMS</span>
         <div class="d-flex flex-column">
           <div class="dropdown mt-1">
@@ -25,11 +25,13 @@
     </div>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="col-11 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin:0 auto;">
           <menu-admin />
         </div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 border bg-white rounded w-100">
-          <router-view @visible="index = $event + '_' + Math.random()" />
+        <div
+          class="content col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 rounded w-100 d-flex justify-content-center"
+        >
+          <router-view class="col-11 bg-white" @visible="index = $event + '_' + Math.random()" />
         </div>
       </div>
     </div>
@@ -80,6 +82,7 @@ export default {
 <style lang="scss">
 .Admin {
   .menu {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
   }
   .container {
     border-radius: unset !important;
@@ -97,6 +100,14 @@ export default {
   }
   .none {
     display: none !important;
+  }
+  @media (max-width: 500px) {
+    .container {
+      padding: 5px 20px !important;
+    }
+    .content {
+      margin-top: 15px;
+    }
   }
 }
 </style>

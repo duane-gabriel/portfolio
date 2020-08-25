@@ -1,5 +1,8 @@
 <template>
-  <div class="tags mx-3 my-4">
+  <div class="tags mx-3 shadow" style>
+    <div class="header d-flex justify-content-between align-items-center mb-3">
+      <span class="ml-4">Tags</span>
+    </div>
     <form>
       <div class="form-group">
         <label for="tag_name">Nome</label>
@@ -92,12 +95,24 @@ export default {
 
 <style lang="scss">
 .tags {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  border-radius: 5px;
+  border: 1px solid #d5d5d5;
   .icon {
     padding: 5px;
     margin: 5px;
     &:hover {
       cursor: pointer;
     }
+  }
+  .header {
+    background: #f8f9fa;
+    height: 50px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-bottom: 1px solid #d5d5d5;
+    border-top-right-radius: 05px;
+    border-top-left-radius: 05px;
   }
 }
 </style>

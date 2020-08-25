@@ -21,10 +21,6 @@ export default {
   data() {
     return {
       menus: [
-        // {
-        //   name: 'Usuários',
-        //   icon: '<i class="far fa-user"></i>',
-        // },
         {
           name: 'Projetos',
           icon: '<i class="fas fa-project-diagram"></i>',
@@ -55,7 +51,13 @@ export default {
 
 <style lang="scss">
 .Menu-admin {
-  li.list-group-item:hover,
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  li.list-group-item:hover {
+    outline: none !important;
+    border-color: #000 !important;
+    cursor: pointer !important;
+    background-color: $main_color;
+  }
   .active {
     outline: none !important;
     border-color: #000 !important;
