@@ -9,9 +9,9 @@
       <div
         v-for="(image, index) of images"
         :class="['carousel-item', index === activeIndex ? 'active' : '']"
-        :key="image.src"
+        :key="image.src || image.url"
       >
-        <img class="d-block w-100" :src="image.src" alt="First slide" />
+        <img class="d-block w-100" :src="image.src || image.url" alt="First slide" />
       </div>
     </div>
     <a

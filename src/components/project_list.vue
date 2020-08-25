@@ -21,7 +21,11 @@
               @click="alter(p)"
               style="background: green;"
             ></i>
-            <i class="far fa-trash-alt icon rounded text-white" style="background: tomato;"></i>
+            <i
+              @click="deleteProject(p.id)"
+              class="far fa-trash-alt icon rounded text-white"
+              style="background: tomato;"
+            ></i>
           </div>
         </div>
       </div>
@@ -30,11 +34,11 @@
 </template>
 
 <script>
-import api from '@/services/api';
-
 /*eslint-disable */
+import api from '@/services/api';
+import dao from '@/services/dao';
+
 export default {
-  components: {},
   data() {
     return {
       projects: [],
@@ -45,7 +49,8 @@ export default {
   },
   methods: {
     requestProjects() {
-      api.get('projects').then(({ data }) => {
+      dao.url = 'projects';
+      dao.get().then(({ data }) => {
         data.sort((a, b) => {
           if (a.id > b.id) {
             return 1;
@@ -59,6 +64,15 @@ export default {
     },
     alter(project) {
       this.$emit('change', project);
+    },
+    deleteProject(id) {
+      const that = this;
+      api
+        .delete('projects/' + id)
+        .then(({ data: id }) => {
+          that.projects = that.projects.filter((p) => p.id !== Number(id));
+        })
+        .catch((e) => console.log(e));
     },
   },
 };

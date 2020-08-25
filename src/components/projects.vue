@@ -96,11 +96,11 @@
 
 <script>
 /*eslint-disable */
+import dao from '@/services/dao';
 import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
 import projectsList from '@/components/project_list.vue';
-import dao, { Api } from '@/services/dao';
 
 export default {
   components: {
@@ -110,6 +110,7 @@ export default {
   },
   data() {
     return {
+      daoList: dao,
       buttonText: 'Add projeto',
       visible: false,
       tabs: 0,
@@ -123,13 +124,13 @@ export default {
       },
       autocompleteItems: [
         {
-          text: 'Spain',
+          text: 'dwadwa',
         },
       ],
     };
   },
   methods: {
-    async sendData() {
+    sendData() {
       this.project.date = new Date(this.project.date).getTime();
 
       const data = new FormData();
@@ -139,7 +140,9 @@ export default {
       data.append('date', this.project.date);
       data.append('link', this.project.link);
       data.append('indexFileStar', this.fileStar.id);
+
       this.tags.forEach((tag) => data.append('technologies', tag.text));
+
       this.files.forEach((file, index) => {
         data.append('files', file);
       });
@@ -152,9 +155,14 @@ export default {
       this.files = this.files.filter((file) => file.name !== name);
     },
     alterMode(project) {
+      const that = this;
       this.project = project;
       this.project.tag = '';
+      this.tags = [];
       this.project.date = new Date(this.project.dateClean);
+      this.project.Technologies.forEach((t) => {
+        that.tags.push({ id: t.id, text: t.name });
+      });
       this.files = this.project.Files;
       this.mode = false;
       this.buttonText = 'Edit project';
@@ -173,8 +181,6 @@ export default {
   },
   mounted() {
     const Files = document.getElementById('project_files');
-    const images = document.querySelector('#images');
-
     const that = this;
     Files.onchange = (e) => {
       that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
@@ -183,6 +189,15 @@ export default {
         file.src = URL.createObjectURL(file);
       });
     };
+    dao.url = 'Technologies';
+    dao.get().then(({ data: tags }) => {
+      tags.forEach((t, i) => {
+        that.autocompleteItems[i] = {
+          id: t.id,
+          text: t.name,
+        };
+      });
+    });
   },
   computed: {
     filteredItems() {
@@ -206,6 +221,10 @@ export default {
   }
 }
 .Projects {
+  .ti-selected-item,
+  .ti-tag {
+    background: $primary !important;
+  }
   .header {
     background: #f8f9fa;
     height: 50px;
