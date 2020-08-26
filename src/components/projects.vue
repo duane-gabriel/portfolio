@@ -147,6 +147,21 @@ export default {
         data.append('files', file);
       });
 
+      console.log(this.project);
+      console.log(data);
+      // return;
+      if (!this.mode) {
+        this.project.indexFileStar = this.fileStar.id;
+        this.project.Technologies = [
+          ...this.project.Technologies,
+          ...this.tags,
+        ];
+        Api.put('projects', this.project)
+          .then(({ data }) => console.log(data))
+          .catch((e) => console.log(e));
+        return;
+      }
+
       Api.post('projects', data)
         .then()
         .catch((e) => console.log(e));
