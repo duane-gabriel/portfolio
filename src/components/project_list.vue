@@ -3,11 +3,11 @@
     <div class="wrap-table100">
       <div class="table">
         <div class="row header bg-primary">
-          <div class="cell">Id</div>
+          <div class="cell pr-4">Id</div>
           <div class="cell">Nome</div>
-          <div class="cell">Data</div>
+          <div class="cell pr-4">Data</div>
           <div class="cell">Link</div>
-          <div class="cell">Ações</div>
+          <div class="cell pr-4">Ações</div>
         </div>
 
         <div class="row" v-for="p of projects" :key="p.id">

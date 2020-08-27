@@ -1,17 +1,24 @@
 <template>
   <div class="Projects w-100">
     <div class="header d-flex justify-content-between align-items-center">
-      <span class="ml-4" v-if="!mode && buttonText !=='Edit project'">Criação do projeto</span>
-      <span class="ml-4" v-if="mode && buttonText !=='Edit project'">Listagem de projetos</span>
-      <span class="ml-4" v-else-if="buttonText ==='Edit project'">Edição do projeto</span>
+      <span class="ml-4" v-if="mode=='add'">Criação do projeto</span>
+      <span class="ml-4" v-if="mode=='list'">Listagem de projetos</span>
+      <span class="ml-4" v-else-if="mode=='edit'">Edição do projeto</span>
       <button
         class="btn btn-outline-primary mr-4"
         style="padding: 5px; height: 35px; font-size: 13px;"
-        @click="mode = !mode"
-      >{{ !mode ? 'Listar projetos' : 'Cadastrar projeto' }}</button>
+        @click="mode = 'list'"
+        v-if="mode == 'add'"
+      >Listar projetos</button>
+      <button
+        class="btn btn-outline-primary mr-4"
+        style="padding: 5px; height: 35px; font-size: 13px;"
+        @click="mode = 'add';clear()"
+        v-if="mode == 'list' || mode=='edit'"
+      >Cadastrar projeto</button>
     </div>
     <div class="row my-3 mx-4">
-      <form enctype="multipart/form-data" class="w-100" v-if="!mode">
+      <form enctype="multipart/form-data" class="w-100" v-if="mode=='add' || mode=='edit'">
         <div class="form-group">
           <label for="project_name">Nome</label>
           <input type="text" v-model="project.name" class="form-control" id="project_name" />
@@ -64,32 +71,31 @@
               <div>
                 <i
                   class="fas fa-star cursor-pointer"
-                  style="margin-top:-5px;margin-right: 5px;"
-                  :id="'starFull'+index"
+                  style="margin-top: -5px; margin-right: 5px;"
+                  :id="'starFull' + index"
                   v-if="fileStar.id == index"
                 ></i>
                 <i
                   @click="setStar(index)"
                   class="far fa-star cursor-pointer"
-                  style="margin-top:-5px;margin-right: 5px;"
-                  :id="'starEmpty'+index"
+                  style="margin-top: -5px; margin-right: 5px;"
+                  :id="'starEmpty' + index"
                   v-else
                 ></i>
                 <i
                   class="fas fa-times close"
                   @click="removeFile(file.name)"
-                  style="margin-top: 3px;
-"
+                  style="margin-top: 3px;"
                 ></i>
               </div>
             </li>
           </ul>
         </div>
         <div class="form-group d-flex justify-content-end">
-          <button @click.prevent="sendData()" class="btn btn-success">{{buttonText}}</button>
+          <button @click.prevent="sendData()" class="btn btn-success">{{ buttonText }}</button>
         </div>
       </form>
-      <projects-list v-if="mode" @change="alterMode($event)" />
+      <projects-list v-if="mode=='list'" @change="alterMode($event)" />
     </div>
   </div>
 </template>
@@ -101,34 +107,34 @@ import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
 import projectsList from '@/components/project_list.vue';
-
+import { required, minLength } from 'vuelidate/lib/validators';
 export default {
   components: {
     datepicker,
     VueTagsInput,
     projectsList,
   },
-  data() {
-    return {
-      daoList: dao,
-      buttonText: 'Add projeto',
-      visible: false,
-      tabs: 0,
-      files: [],
-      project: { tag: '' },
-      pt: ptBR,
-      mode: false,
-      tags: [],
-      fileStar: {
-        id: 0,
+  data: () => ({
+    buttonText: 'Add projeto',
+    visible: false,
+    tabs: 0,
+    files: [],
+    project: { tag: '', name: '' },
+    pt: ptBR,
+    mode: 'add',
+    tags: [],
+    fileStar: {
+      id: 0,
+    },
+    autocompleteItems: [
+      {
+        text: 'dwadwa',
       },
-      autocompleteItems: [
-        {
-          text: 'dwadwa',
-        },
-      ],
-    };
-  },
+    ],
+  }),
+  // validations: {
+  //   project: { name: { required, minLength: minLength(6) } },
+  // },
   methods: {
     sendData() {
       this.project.date = new Date(this.project.date).getTime();
@@ -146,11 +152,7 @@ export default {
       this.files.forEach((file, index) => {
         data.append('files', file);
       });
-
-      console.log(this.project);
-      console.log(data);
-      // return;
-      if (!this.mode) {
+      if (this.buttonText === 'Edit project') {
         this.project.indexFileStar = this.fileStar.id;
         this.project.Technologies = [
           ...this.project.Technologies,
@@ -179,11 +181,16 @@ export default {
         that.tags.push({ id: t.id, text: t.name });
       });
       this.files = this.project.Files;
-      this.mode = false;
+      this.mode = 'edit';
       this.buttonText = 'Edit project';
     },
     setStar(index) {
       this.fileStar.id = index;
+    },
+    clear() {
+      this.project = { tag: '' };
+      this.tags = [];
+      this.files = [];
     },
   },
   watch: {

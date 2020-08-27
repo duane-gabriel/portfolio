@@ -8,17 +8,17 @@
       </div>
       <div class="row pt-5 d-flex justify-content-center">
         <div class="grid-container d-flex justify-content-center" style="width: 95%;">
-          <div class="pr-2 col-sm-12 col-md-4 col-lg-4 col-xl-4" v-for="(x, index) of 3" :key="x">
+          <div
+            class="pr-2 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+            v-for="(project, index) of cards"
+            :key="project.id"
+          >
             <figure
               @mouseover="imgHover('id' + index, 'over')"
               @mouseout="imgHover('id' + index, 'out')"
-              @click="openModal(cards[0])"
+              @click="openModal(project)"
             >
-              <img
-                src="https://image.freepik.com/fotos-gratis/homem-de-codificacao_1098-18084.jpg"
-                alt
-                class="img-fluid"
-              />
+              <img :src="project.thumbnail" alt class="img-fluid" />
               <div :class="'position-absolute img-overlay ' + 'id' + index"></div>
             </figure>
           </div>
@@ -32,45 +32,71 @@
 <script>
 /* eslint-disable */
 import modalProject from '@/components/modal-project.vue';
+import api from '@/services/api';
+
 export default {
   components: { modalProject },
   data() {
     return {
       data: {},
-      cards: [
-        {
-          title: 'Github searcher com Reacjs',
-          tecnologies: ['React', 'React router', 'Redux'],
-          description: 'Um projeto com o intuito...',
-          date: '10/10/10',
-          preview: 'https://www.google.com.br',
-          content: `<img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-          <img src="https://images.unsplash.com/photo-1592901571648-179db177fdd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>`,
-        },
-      ],
+      cards: [],
       visible: false,
     };
+  },
+  mounted() {
+    this.getData();
   },
   methods: {
     imgHover(id, option) {
       const overlays = document.getElementsByClassName('img-overlay');
-      // console.log(overlays);
       overlays.forEach((overlay) => overlay.classList.remove('visible'));
-
-      // const className = document.getElementsByClassName(id)[0];
-
-      if (option === 'over') {
-        // className.classList.add('visible');
-        // return;
-      }
-      // className.classList.remove('visible');
     },
     openModal(data) {
       this.visible = true;
       this.data = data;
+    },
+    getData() {
+      api.get('projects').then(({ data }) => {
+        let cards = this.cards;
+        data.forEach((p, i) => {
+          let id = p.id;
+          let title = p.name;
+          console.log(p.Files);
+
+          let tecnologies = p.Technologies.sort((a, b) => {
+            if (a.id > b.id) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+
+          let description = p.description;
+          let date = p.date;
+          let preview = p.link;
+          let content = '';
+          let thumbnail = '';
+          p.Files.forEach((f) => {
+            if (f.star) {
+              thumbnail = f.url;
+            }
+            content += `<img src="${f.url}"/>`;
+          });
+
+          let obj = {
+            id,
+            title,
+            tecnologies,
+            description,
+            date,
+            preview,
+            content,
+            thumbnail,
+          };
+
+          cards.push(obj);
+        });
+      });
     },
   },
 };
