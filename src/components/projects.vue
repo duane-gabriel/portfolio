@@ -4,18 +4,21 @@
       <span class="ml-4" v-if="mode=='add'">Criação do projeto</span>
       <span class="ml-4" v-if="mode=='list'">Listagem de projetos</span>
       <span class="ml-4" v-else-if="mode=='edit'">Edição do projeto</span>
-      <button
-        class="btn btn-outline-primary mr-4"
-        style="padding: 5px; height: 35px; font-size: 13px;"
-        @click="mode = 'list'"
-        v-if="mode == 'add'"
-      >Listar projetos</button>
-      <button
-        class="btn btn-outline-primary mr-4"
-        style="padding: 5px; height: 35px; font-size: 13px;"
-        @click="mode = 'add';clear()"
-        v-if="mode == 'list' || mode=='edit'"
-      >Cadastrar projeto</button>
+
+      <div>
+        <button
+          class="btn btn-outline-primary mr-4"
+          style="padding: 5px; height: 35px; font-size: 13px;"
+          @click="mode = 'list'"
+          v-if="mode == 'add' || mode=='edit'"
+        >Listar projetos</button>
+        <button
+          class="btn btn-outline-primary mr-4"
+          style="padding: 5px; height: 35px; font-size: 13px;"
+          @click="mode = 'add';clear()"
+          v-if="mode == 'list' || mode=='edit'"
+        >Cadastrar projeto</button>
+      </div>
     </div>
     <div class="row my-3 mx-4">
       <form enctype="multipart/form-data" class="w-100" v-if="mode=='add' || mode=='edit'">
@@ -53,9 +56,11 @@
           <label for="project_files" class="btn btn-info">Upload de anexos</label>
           <input
             type="file"
+            ref="file"
             name="files"
             class="form-control-file"
             multiple
+            @change="handleFileUpload()"
             id="project_files"
             style="display: none;"
           />
@@ -152,12 +157,10 @@ export default {
       this.files.forEach((file, index) => {
         data.append('files', file);
       });
+
       if (this.buttonText === 'Edit project') {
         this.project.indexFileStar = this.fileStar.id;
-        this.project.Technologies = [
-          ...this.project.Technologies,
-          ...this.tags,
-        ];
+        this.project.Technologies = [...this.tags];
         Api.put('projects', this.project)
           .then(({ data }) => console.log(data))
           .catch((e) => console.log(e));
@@ -167,6 +170,7 @@ export default {
       Api.post('projects', data)
         .then()
         .catch((e) => console.log(e));
+      this.clear();
     },
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
@@ -192,6 +196,13 @@ export default {
       this.tags = [];
       this.files = [];
     },
+    handleFileUpload() {
+      // let tmp = Array.from(this.$refs.file.files);
+      // tmp = tmp.map((f) => (f.src = URL.createObjectURL(f)));
+      // this.files = [...this.files, Array.from(tmp)];
+      // console.log(this.$refs.file.files);
+      // // this.files = [...this.files, ]
+    },
   },
   watch: {
     files: {
@@ -205,6 +216,7 @@ export default {
     const Files = document.getElementById('project_files');
     const that = this;
     Files.onchange = (e) => {
+      console.log('alô');
       that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
 
       that.files.forEach((file) => {
