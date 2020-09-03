@@ -3,10 +3,10 @@
     <ul class="list-group">
       <li
         class="list-group-item d-flex align-items-center"
-        @click="setMenu(index)"
-        v-for="(item, index) in menus"
+        @click="setMenu(index,item.name)"
+        v-for="(item,index) in menus"
         :key="item.name + Math.random()"
-        :class="[item.active ? 'active' : '']"
+        :class="[item.name == $store.state.menuAdmin ? 'active' : '']"
       >
         <span :class="['mr-2']" v-html="item.icon"></span>
         {{ item.name }}
@@ -24,24 +24,19 @@ export default {
         {
           name: 'Projetos',
           icon: '<i class="fas fa-project-diagram"></i>',
-          active: true,
           route: 'Admin.projects',
         },
         {
           name: 'Tags',
           icon: '<i class="fas fa-tags"></i>',
-          active: false,
           route: 'Admin.tags',
         },
       ],
     };
   },
   methods: {
-    setMenu(index) {
-      this.menus.forEach((m, i) => {
-        if (index !== i) m.active = false;
-        else m.active = true;
-      });
+    setMenu(index, name) {
+      this.$store.state.menuAdmin = name;
       if (this.$route.name === this.menus[index].route) return;
       this.$router.push({ name: this.menus[index].route });
     },

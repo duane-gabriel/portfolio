@@ -10,6 +10,7 @@ export default new Vuex.Store({
     menuIsActive: 'home',
     user: null,
     files: [],
+    menuAdmin: 'Projetos',
   },
   mutations: {
     setMenu(state, { payLoad }) {
