@@ -15,12 +15,15 @@
         <div class="col-md-4 col-lg-4 mt-5">
           <div class="descricao">
             <h2 class="h3 font-weight-light">Descrição</h2>
-            <i class="fas fa-globe-americas mr-2"></i>
-            <a target="_blank" :href="data.preview">{{data.preview}}</a>
-            <br />
-            <i class="fas fa-calendar-minus mr-2 mt-2"></i>
-            {{data.date}}
-            <p class="mt-1">{{data.description}}</p>
+            <div class="mt-3">
+              <i class="fas fa-globe-americas mr-2"></i>
+              <a target="_blank" :href="data.preview" style="color:#424242">{{data.preview}}</a>
+            </div>
+            <div class="mt-3">
+              <i class="fas fa-calendar-minus mr-2"></i>
+              <span style="color:#424242">{{data.date}}</span>
+            </div>
+            <p class="mt-3" style="color:#424242">{{data.description}}</p>
           </div>
           <div class="tecnologies mt-3">
             <h2 class="h3 font-weight-light">Tecnologias</h2>
@@ -61,6 +64,9 @@ export default {
 
 <style lang="scss">
 .project-modal {
+  i {
+    color: $primary;
+  }
   z-index: 20;
   background-color: #fff;
   width: 100%;

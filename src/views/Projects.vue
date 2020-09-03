@@ -7,7 +7,10 @@
         </header>
       </div>
       <div class="row pt-5 d-flex justify-content-center">
-        <div class="grid-container d-flex justify-content-center" style="width: 95%;">
+        <div
+          class="grid-container d-flex justify-content-center"
+          style="width: 95%;flex-wrap:wrap;"
+        >
           <div
             class="pr-2 col-sm-12 col-md-4 col-lg-4 col-xl-4"
             v-for="(project, index) of cards"
@@ -18,7 +21,9 @@
               @mouseout="imgHover('id' + index, 'out')"
               @click="openModal(project)"
             >
-              <img :src="project.thumbnail" alt class="img-fluid" />
+              <img :src="project.thumbnail" alt class="img-fluid img-star" />
+              <!-- style="height: 200px;width:350px;object-fit: cover;width: 350px;" -->
+              <!-- <div class="img-star" :style="'background:url('+project.thumbnail+')'"></div> -->
               <div :class="'position-absolute img-overlay ' + 'id' + index"></div>
             </figure>
           </div>
@@ -61,7 +66,7 @@ export default {
         data.forEach((p, i) => {
           let id = p.id;
           let title = p.name;
-          console.log(p.Files);
+          // console.log(p.Files);
 
           let tecnologies = p.Technologies.sort((a, b) => {
             if (a.id > b.id) {
@@ -103,6 +108,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+figure {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  border: 1px solid rgba(0, 0, 0, 0.075);
+  border-radius: 05px;
+}
 header {
   background-color: $main_color !important;
   width: 100%;
@@ -139,6 +149,12 @@ h2 {
 }
 figure:hover {
   cursor: pointer;
+}
+.img-star {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 img {
   border-radius: 05px;

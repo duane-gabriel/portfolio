@@ -14,7 +14,9 @@
           <div class="cell">{{ p.id }}</div>
           <div class="cell">{{ p.name }}</div>
           <div class="cell">{{ p.date }}</div>
-          <div class="cell">{{ p.link }}</div>
+          <div class="cell">
+            <a :href="p.link" target="_blank">{{ p.link }}</a>
+          </div>
           <div class="cell">
             <i
               class="fas fa-pencil-alt icon rounded text-white"
