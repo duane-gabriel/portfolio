@@ -38,6 +38,31 @@
         </div>
       </div>
     </div>
+    <nav aria-label="Page navigation example" style="display:flex;justify-content:flex-end;">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous" @click="paginate('prev')">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li
+          class="page-item"
+          :class="{'active':activeItem == Number(x)}"
+          v-for="x of totalPages"
+          :key="x+Math.random()"
+          @click="loadData(x)"
+        >
+          <a class="page-link" href="#">{{x}}</a>
+        </li>
+        <li class="page-item" @click="paginate('next')">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -51,16 +76,27 @@ export default {
       tag: { name: '' },
       tags: [],
       buttonText: 'Add tag',
+      totalPages: {},
+      activeItem: 1,
     };
   },
   mounted() {
-    dao.url = 'technologies';
-    dao.headers = {
-      'Content-type': 'application/json',
-    };
-    dao.get().then(({ data }) => (this.tags = data));
+    this.loadData();
   },
   methods: {
+    loadData(page = 1) {
+      dao.url = `technologies?page=${page}`;
+      dao.headers = {
+        'Content-type': 'application/json',
+      };
+      this.activeItem = page;
+      dao.get().then(({ data }) => {
+        this.totalPages = Math.ceil(data.info.total / data.info.limit);
+        delete data.info;
+        this.tags = data;
+      });
+      dao.url = 'technologies';
+    },
     saveTag() {
       const { name } = this.tag;
       if (this.buttonText == 'Edit tag') {
@@ -74,8 +110,8 @@ export default {
         return;
       }
       dao.post({ name }).then(({ data }) => {
-        this.tags = [...this.tags, data];
         this.tag.name = '';
+        this.loadData();
       });
     },
     editTag(tag) {
@@ -83,11 +119,21 @@ export default {
       this.buttonText = 'Edit tag';
     },
     deleteTag(tag) {
-      dao
-        .delete(tag.id)
-        .then(
-          ({ data }) => (this.tags = this.tags.filter((t) => t.id !== tag.id))
-        );
+      dao.delete(tag.id).then(({ data }) => this.loadData());
+    },
+    paginate(option) {
+      const index = this.activeItem;
+      if (option == 'prev' && index - 1 <= this.totalPages && index - 1 >= 1) {
+        this.activeItem = index - 1;
+        this.loadData(this.activeItem);
+      } else if (
+        option == 'next' &&
+        index + 1 <= this.totalPages &&
+        index + 1 >= 1
+      ) {
+        this.activeItem = index + 1;
+        this.loadData(this.activeItem);
+      }
     },
   },
 };
