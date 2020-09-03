@@ -97,7 +97,12 @@
           </ul>
         </div>
         <div class="form-group d-flex justify-content-end">
-          <button @click.prevent="sendData()" class="btn btn-success">{{ buttonText }}</button>
+          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode=='add'">Add projeto</button>
+          <button
+            @click.prevent="sendData()"
+            class="btn btn-success"
+            v-if="mode=='edit'"
+          >Edit projeto</button>
         </div>
       </form>
       <projects-list v-if="mode=='list'" @change="alterMode($event)" />
@@ -158,7 +163,7 @@ export default {
         data.append('files', file);
       });
 
-      if (this.buttonText === 'Edit project') {
+      if (this.mode == 'edit') {
         this.project.indexFileStar = this.fileStar.id;
         this.project.Technologies = [...this.tags];
         Api.put('projects', this.project)
@@ -202,6 +207,16 @@ export default {
       // this.files = [...this.files, Array.from(tmp)];
       // console.log(this.$refs.file.files);
       // // this.files = [...this.files, ]
+
+      const Files = this.$refs.file.files;
+      const that = this;
+
+      console.log('alô');
+      that.files = [...Array.from(that.files), ...Array.from(Files)];
+
+      that.files.forEach((file) => {
+        file.src = URL.createObjectURL(file);
+      });
     },
   },
   watch: {
@@ -213,16 +228,16 @@ export default {
     },
   },
   mounted() {
-    const Files = document.getElementById('project_files');
+    // const Files = document.getElementById('project_files');
     const that = this;
-    Files.onchange = (e) => {
-      console.log('alô');
-      that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
+    // Files.onchange = (e) => {
+    //   console.log('alô');
+    //   that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
 
-      that.files.forEach((file) => {
-        file.src = URL.createObjectURL(file);
-      });
-    };
+    //   that.files.forEach((file) => {
+    //     file.src = URL.createObjectURL(file);
+    //   });
+    // };
     dao.url = 'Technologies';
     dao.get().then(({ data: tags }) => {
       tags.forEach((t, i) => {

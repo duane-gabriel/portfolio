@@ -1,10 +1,27 @@
 <template>
   <div class="project-modal" v-if="visible">
     <div class="container px-5">
-      <span class="close mr-4" @click="closeModal">
-        <i class="far fa-times-circle"></i>
-      </span>
-      <div class="row d-flex justify-content-center mt-5 mt-sm-5 mt-md-5 mt-lg-5">
+      <div class="d-flex justify-content-end mt-4">
+        <span
+          v-if="arrows.prev!=null"
+          class="mr-3 cursor-pointer arrows-container"
+          @click="nav(arrows.prev)"
+        >
+          <i class="fas fa-arrow-left" style="color:#424242;"></i>
+        </span>
+        <span
+          v-if="arrows.next!=null"
+          class="mr-4 cursor-pointer arrows-container"
+          @click="nav(arrows.next)"
+        >
+          <i class="fas fa-arrow-right" style="color:#424242;"></i>
+        </span>
+        <span class="mr-4 arrows-container cursor-pointer" @click="closeModal">
+          <i class="fas fa-times" style="color:#424242;font-size:21px;"></i>
+        </span>
+      </div>
+
+      <div class="row d-flex justify-content-center mt-5 mt-sm-5 mt-md-5 mt-lg-2">
         <h1 class="h2 ml-4 font-weight-normal">{{data.title}}</h1>
       </div>
       <div class="row mt-5 px-4 px-sm-0 px-md-0 px-lg-0">
@@ -43,7 +60,7 @@
 
 <script>
 export default {
-  props: ['data', 'visible'],
+  props: ['data', 'visible', 'arrows'],
   data() {
     return {};
   },
@@ -58,14 +75,37 @@ export default {
     closeModal() {
       this.$emit('closeModal');
     },
+    nav(index) {
+      this.$emit('nav', index);
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .project-modal {
-  i {
-    color: $primary;
+  .arrows-container {
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 2px;
+    i {
+      font-size: 18px;
+    }
+    &:hover {
+      i:hover {
+        color: $primary !important;
+      }
+    }
+    i:hover {
+      color: $primary !important;
+    }
+  }
+  .close i:hover,
+  .descricao i {
+    color: $primary !important;
   }
   z-index: 20;
   background-color: #fff;
@@ -84,11 +124,6 @@ export default {
     padding: unset !important;
     box-shadow: unset !important;
   }
-
-  span.close:hover {
-    cursor: pointer;
-  }
-
   .modal-project-content {
     img {
       max-width: 100%;

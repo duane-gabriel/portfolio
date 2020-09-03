@@ -6,7 +6,7 @@
           <h1 class="text-white">Projetos</h1>
         </header>
       </div>
-      <div class="row pt-5 d-flex justify-content-center">
+      <div class="row pt-5 d-flex justify-content-center mb-3">
         <div
           class="grid-container d-flex justify-content-center"
           style="width: 95%;flex-wrap:wrap;"
@@ -19,7 +19,7 @@
             <figure
               @mouseover="imgHover('id' + index, 'over')"
               @mouseout="imgHover('id' + index, 'out')"
-              @click="openModal(project)"
+              @click="openModal(project,index)"
             >
               <img :src="project.thumbnail" alt class="img-fluid img-star" />
               <!-- style="height: 200px;width:350px;object-fit: cover;width: 350px;" -->
@@ -30,7 +30,14 @@
         </div>
       </div>
     </div>
-    <modalProject @closeModal="visible = false" :data="data" :visible="visible" />
+    <modalProject
+      @closeModal="visible = false"
+      @nav="nav($event)"
+      :data="data"
+      :arrows="arrows"
+      :cards="cards"
+      :visible="visible"
+    />
   </div>
 </template>
 
@@ -46,6 +53,7 @@ export default {
       data: {},
       cards: [],
       visible: false,
+      arrows: {},
     };
   },
   mounted() {
@@ -56,9 +64,13 @@ export default {
       const overlays = document.getElementsByClassName('img-overlay');
       overlays.forEach((overlay) => overlay.classList.remove('visible'));
     },
-    openModal(data) {
+    openModal(data, currentIndex) {
       this.visible = true;
       this.data = data;
+      this.arrows = {
+        prev: this.cards[currentIndex - 1] ? currentIndex - 1 : null,
+        next: this.cards[currentIndex + 1] ? currentIndex + 1 : null,
+      };
     },
     getData() {
       api.get('projects').then(({ data }) => {
@@ -66,8 +78,6 @@ export default {
         data.forEach((p, i) => {
           let id = p.id;
           let title = p.name;
-          // console.log(p.Files);
-
           let tecnologies = p.Technologies.sort((a, b) => {
             if (a.id > b.id) {
               return 1;
@@ -102,6 +112,9 @@ export default {
           cards.push(obj);
         });
       });
+    },
+    nav(index) {
+      this.openModal(this.cards[index], index);
     },
   },
 };

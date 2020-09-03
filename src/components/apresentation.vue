@@ -16,14 +16,14 @@
           </div>
           <content class="text col-lg-6 col-sm-12">
             <h1>Duane Faria</h1>
-            <small class="text-center">Programador full stack</small>
+            <small class="text-center">Programador :D</small>
             <div class="social-media">
               <div class="social-media-circle">
                 <a href="https://www.instagram.com/duhh_gabriel/" target="_blank">
                   <!-- <img
                     class="img-fluid"
                     src="https://img.icons8.com/cotton/26/000000/instagram-new.png"
-                  /> -->
+                  />-->
                   <i class="fab fa-instagram"></i>
                 </a>
               </div>
@@ -76,18 +76,18 @@ export default {
   data() {
     return {
       infos: [
-        { question: "Idade", answer: 21 },
-        { question: "Endereco", answer: "São Paulo" },
-        { question: "E-mail", answer: "duane_gabriel@hotmail.com" },
-        { question: "Celular", answer: "(11) 97712-4554" }
-      ]
+        { question: 'Idade', answer: 21 },
+        { question: 'Endereco', answer: 'São Paulo' },
+        { question: 'E-mail', answer: 'duane_gabriel@hotmail.com' },
+        { question: 'Celular', answer: '(11) 97712-4554' },
+      ],
     };
   },
   mounted() {
-    let txtEl = document.getElementsByTagName("small")[0];
+    let txtEl = document.getElementsByTagName('small')[0];
     function type(el) {
-      const txt = el.innerHTML.split("");
-      el.innerHTML = "";
+      const txt = el.innerHTML.split('');
+      el.innerHTML = '';
       txt.forEach((letra, i) => {
         setTimeout(() => {
           el.innerHTML += letra;
@@ -98,8 +98,8 @@ export default {
     type(txtEl);
 
     function erase(txtEl) {
-      const ap = txtEl.innerHTML.split("");
-      const ap2 = txtEl.innerHTML.split("");
+      const ap = txtEl.innerHTML.split('');
+      const ap2 = txtEl.innerHTML.split('');
       for (let i = ap.lengt; i != 0; i--) {
         let nt = ap2.slice(ap2.lastIndexOf(ap[i]), ap2.lastIndexOf(ap[i]) + 1);
 
@@ -108,17 +108,17 @@ export default {
         }, 75 * i);
       }
     }
-  }
+  },
 };
 </script>
 <style lang="scss">
 .apresentation {
-  i { 
-    color:$main_color;
-    font-size:20px;
+  i {
+    color: $main_color;
+    font-size: 20px;
   }
   small:after {
-    content: "|";
+    content: '|';
     margin-left: 5px;
     opacity: 1;
     animation: pisca 0.7s infinite;
