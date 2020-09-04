@@ -32,12 +32,12 @@ export default new Vuex.Store({
     },
     LOGIN({ commit }, payLoad) {
       return axios
-        .post('http://localhost:3000/session', payLoad.credentials)
+        .post(`${process.env.VUE_APP_API_URL}session`, payLoad.credentials)
         .then(({ data }) => commit('SET_USER_DATA', { data }));
     },
     saveProject(context, { project }) {
       axios
-        .post('http://localhost:3000/projects', project)
+        .post(`${process.env.VUE_APP_API_URL}projects`, project)
         .then()
         .catch((e) => console.log(e));
     },
