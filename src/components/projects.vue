@@ -202,16 +202,9 @@ export default {
       this.files = [];
     },
     handleFileUpload() {
-      // let tmp = Array.from(this.$refs.file.files);
-      // tmp = tmp.map((f) => (f.src = URL.createObjectURL(f)));
-      // this.files = [...this.files, Array.from(tmp)];
-      // console.log(this.$refs.file.files);
-      // // this.files = [...this.files, ]
-
       const Files = this.$refs.file.files;
       const that = this;
 
-      console.log('alô');
       that.files = [...Array.from(that.files), ...Array.from(Files)];
 
       that.files.forEach((file) => {
@@ -228,18 +221,11 @@ export default {
     },
   },
   mounted() {
-    // const Files = document.getElementById('project_files');
     const that = this;
-    // Files.onchange = (e) => {
-    //   console.log('alô');
-    //   that.files = [...Array.from(that.files), ...Array.from(e.target.files)];
-
-    //   that.files.forEach((file) => {
-    //     file.src = URL.createObjectURL(file);
-    //   });
-    // };
     dao.url = 'Technologies';
-    dao.get().then(({ data: tags }) => {
+    dao.get().then(({ data }) => {
+      const tags = Object.values(data);
+      delete tags[tags.length - 1];
       tags.forEach((t, i) => {
         that.autocompleteItems[i] = {
           id: t.id,

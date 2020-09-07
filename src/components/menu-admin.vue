@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     setMenu(index, name) {
-      this.$store.state.menuAdmin = name;
+      this.$store.dispatch('setMenuAdmin', { menuAdmin: name });
       if (this.$route.name === this.menus[index].route) return;
       this.$router.push({ name: this.menus[index].route });
     },

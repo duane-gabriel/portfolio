@@ -65,9 +65,6 @@ export default {
       }
     });
   },
-  beforeDestroy() {
-    this.$store.state.menuAdmin = 'Projetos';
-  },
   methods: {
     setVisibility() {
       this.visible = true;

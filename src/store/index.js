@@ -25,6 +25,9 @@ export default new Vuex.Store({
       localStorage.removeItem('vuex');
       location.reload(); /*eslint-disable-line*/
     },
+    SET_MENU_ADMIN(state, { menuAdmin }) {
+      state.menuAdmin = menuAdmin;
+    },
   },
   actions: {
     SET_MENU(context, payLoad) {
@@ -43,6 +46,9 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit('CLEAR_USER_DATA');
+    },
+    setMenuAdmin({ commit }, { menuAdmin }) {
+      commit('SET_MENU_ADMIN', { menuAdmin });
     },
   },
   modules: {},
