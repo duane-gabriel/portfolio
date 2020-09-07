@@ -6,7 +6,9 @@
           <h1 class="text-white">Projetos</h1>
         </header>
       </div>
-      <div class="row pt-5 d-flex justify-content-center mb-3">
+      <!--   -->
+      <spinner v-if="spinner" class="d-flex justify-content-center mt-5 pt-5" />
+      <div class="row pt-5 d-flex justify-content-center mb-3" v-else>
         <div
           class="grid-container d-flex justify-content-center"
           style="width: 95%;flex-wrap:wrap;"
@@ -45,15 +47,17 @@
 /* eslint-disable */
 import modalProject from '@/components/modal-project.vue';
 import api from '@/services/api';
+import spinner from '@/components/spinner.vue';
 
 export default {
-  components: { modalProject },
+  components: { modalProject, spinner },
   data() {
     return {
       data: {},
       cards: [],
       visible: false,
       arrows: {},
+      spinner: false,
     };
   },
   mounted() {
@@ -73,6 +77,8 @@ export default {
       };
     },
     getData() {
+      this.spinner = true;
+      const that = this;
       api.get('projects').then(({ data }) => {
         let cards = this.cards;
         data.forEach((p, i) => {
@@ -111,6 +117,7 @@ export default {
 
           cards.push(obj);
         });
+        that.spinner = false;
       });
     },
     nav(index) {

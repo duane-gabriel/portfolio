@@ -1,6 +1,7 @@
 <template>
   <div class="project-list w-100">
-    <div class="wrap-table100">
+    <spinner v-if="spinner" class="d-flex justify-content-center" />
+    <div class="wrap-table100" v-else>
       <div class="table">
         <div class="row header bg-primary">
           <div class="cell pr-4">Id</div>
@@ -39,11 +40,15 @@
 /*eslint-disable */
 import api from '@/services/api';
 import dao from '@/services/dao';
-
+import spinner from '@/components/spinner.vue';
 export default {
+  components: {
+    spinner,
+  },
   data() {
     return {
       projects: [],
+      spinner: false,
     };
   },
   mounted() {
@@ -52,6 +57,7 @@ export default {
   methods: {
     requestProjects() {
       dao.url = 'projects';
+      this.spinner = true;
       dao.get().then(({ data }) => {
         data.sort((a, b) => {
           if (a.id > b.id) {
@@ -62,6 +68,7 @@ export default {
           }
         });
         this.projects = data;
+        this.spinner = false;
       });
     },
     alter(project) {

@@ -12,7 +12,9 @@
         <button type="button" @click.prevent="saveTag" class="btn btn-success">{{buttonText}}</button>
       </div>
     </form>
-    <div class="wrap-table100">
+    <spinner v-if="spinner" class="d-flex justify-content-center mb-5" />
+
+    <div class="wrap-table100" v-if="!spinner">
       <div class="table">
         <div class="row header bg-primary">
           <div class="cell">Id</div>
@@ -38,7 +40,11 @@
         </div>
       </div>
     </div>
-    <nav aria-label="Page navigation example" style="display:flex;justify-content:flex-end;">
+    <nav
+      v-if="!spinner"
+      aria-label="Page navigation example"
+      style="display:flex;justify-content:flex-end;"
+    >
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous" @click="paginate('prev')">
@@ -70,7 +76,12 @@
 /*eslint-disable */
 import api from '@/services/api';
 import dao from '@/services/dao';
+import spinner from '@/components/spinner.vue';
+
 export default {
+  components: {
+    spinner,
+  },
   data() {
     return {
       tag: { name: '' },
@@ -78,6 +89,7 @@ export default {
       buttonText: 'Add tag',
       totalPages: {},
       activeItem: 1,
+      spinner: false,
     };
   },
   mounted() {
@@ -85,6 +97,7 @@ export default {
   },
   methods: {
     loadData(page = 1) {
+      this.spinner = true;
       dao.url = `technologies?page=${page}`;
       dao.headers = {
         'Content-type': 'application/json',
@@ -94,6 +107,7 @@ export default {
         this.totalPages = Math.ceil(data.info.total / data.info.limit);
         delete data.info;
         this.tags = data;
+        this.spinner = false;
       });
       dao.url = 'technologies';
     },
