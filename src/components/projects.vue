@@ -65,7 +65,7 @@
             style="display: none;"
           />
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if="files.length > 0">
           <ul>
             <li
               class="d-flex justify-content-between mb-1"
@@ -95,6 +95,8 @@
               </div>
             </li>
           </ul>
+          <i class="fas fa-star cursor-pointer" style="margin-top: -5px; margin-right: 5px;"></i>
+          Significa o arquivo que será capa do projeto.
         </div>
         <div class="form-group d-flex justify-content-end">
           <button @click.prevent="sendData()" class="btn btn-success" v-if="mode=='add'">Add projeto</button>
@@ -141,10 +143,8 @@ export default {
         text: 'dwadwa',
       },
     ],
+    filesUpload: [],
   }),
-  // validations: {
-  //   project: { name: { required, minLength: minLength(6) } },
-  // },
   methods: {
     sendData() {
       this.project.date = new Date(this.project.date).getTime();
@@ -166,16 +166,24 @@ export default {
       if (this.mode == 'edit') {
         this.project.indexFileStar = this.fileStar.id;
         this.project.Technologies = [...this.tags];
-        Api.put('projects', this.project)
-          .then(({ data }) => console.log(data))
-          .catch((e) => console.log(e));
+        const data = new FormData();
+        this.filesUpload.forEach((f) => data.append('files', f));
+        Api.post('files', data).then(({ data }) => {
+          this.project.filesUpload = data.files;
+          console.log(this.project);
+          // return;
+          Api.put('projects', this.project)
+            .then((res) => console.log(res))
+            .catch((e) => console.log(e));
+          return;
+        });
         return;
+      } else {
+        Api.post('projects', data)
+          .then()
+          .catch((e) => console.log(e));
+        this.clear();
       }
-
-      Api.post('projects', data)
-        .then()
-        .catch((e) => console.log(e));
-      this.clear();
     },
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
@@ -208,8 +216,14 @@ export default {
       that.files = [...Array.from(that.files), ...Array.from(Files)];
 
       that.files.forEach((file) => {
-        file.src = URL.createObjectURL(file);
+        if (!file.url) {
+          file.src = URL.createObjectURL(file);
+        }
       });
+      if (this.mode == 'edit') {
+        console.log('caiu na trap');
+        this.filesUpload = [...this.filesUpload, ...Array.from(Files)];
+      }
     },
   },
   watch: {

@@ -16,14 +16,14 @@ export default {
   },
   mounted() {
     window.onbeforeunload = function () {
-      localStorage.setItem(
-        'vuex',
-        JSON.stringify({
-          menuIsActive: 'home',
-          user: {},
-          menuAdmin: 'Projetos',
-        }),
-      );
+      const storage = JSON.parse(localStorage.getItem('vuex'));
+      storage.menuIsActive = 'home';
+      // {
+      //     menuIsActive: 'home',
+      //     user: {},
+      //     menuAdmin: 'Projetos',
+      //   }
+      localStorage.setItem('vuex', JSON.stringify(storage));
     };
   },
 };
