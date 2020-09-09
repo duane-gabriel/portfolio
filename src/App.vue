@@ -14,6 +14,18 @@ export default {
       exclude: ['Login', 'Admin', 'Admin.projects', 'Admin.tags'],
     };
   },
+  mounted() {
+    window.onbeforeunload = function () {
+      localStorage.setItem(
+        'vuex',
+        JSON.stringify({
+          menuIsActive: 'home',
+          user: {},
+          menuAdmin: 'Projetos',
+        }),
+      );
+    };
+  },
 };
 </script>
 <style lang="scss">
