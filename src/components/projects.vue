@@ -1,58 +1,68 @@
 <template>
   <div class="Projects w-100">
     <div class="header d-flex justify-content-between align-items-center">
-      <span class="ml-4" v-if="mode=='add'">Criação do projeto</span>
-      <span class="ml-4" v-if="mode=='list'">Listagem de projetos</span>
-      <span class="ml-4" v-else-if="mode=='edit'">Edição do projeto</span>
+      <span class="ml-4" v-if="mode == 'add'">Criação do projeto</span>
+      <span class="ml-4" v-if="mode == 'list'">Listagem de projetos</span>
+      <span class="ml-4" v-else-if="mode == 'edit'">Edição do projeto</span>
 
       <div>
         <button
           class="btn btn-outline-primary mr-4"
           style="padding: 5px; height: 35px; font-size: 13px;"
           @click="mode = 'list'"
-          v-if="mode == 'add' || mode=='edit'"
-        >Listar projetos</button>
+          v-if="mode == 'add' || mode == 'edit'"
+        >
+          Listar projetos
+        </button>
         <button
           class="btn btn-outline-primary mr-4"
           style="padding: 5px; height: 35px; font-size: 13px;"
-          @click="mode = 'add';clear()"
-          v-if="mode == 'list' || mode=='edit'"
-        >Cadastrar projeto</button>
+          @click="
+            mode = 'add';
+            clear();
+          "
+          v-if="mode == 'list' || mode == 'edit'"
+        >
+          Cadastrar projeto
+        </button>
       </div>
     </div>
     <div class="row my-3 mx-4">
-      <form enctype="multipart/form-data" class="w-100" v-if="mode=='add' || mode=='edit'">
+      <form enctype="multipart/form-data" class="w-100" v-if="mode == 'add' || mode == 'edit'">
         <div class="form-group">
           <label for="project_name">Nome</label>
           <input type="text" v-model="project.name" class="form-control" id="project_name" />
-          <small
-            class="text-danger"
-            v-if="$v.project.name.$error && !$v.project.name.required"
-          >campo obrigatório *</small>
+          <small class="text-danger" v-if="$v.project.name.$error && !$v.project.name.required"
+            >campo obrigatório *</small
+          >
         </div>
         <div class="form-group">
           <label for="project_desc">Descrição</label>
-          <textarea class="form-control" v-model="project.description" id="project_desc" rows="3"></textarea>
+          <textarea
+            class="form-control"
+            v-model="project.description"
+            id="project_desc"
+            rows="3"
+          ></textarea>
           <small
             class="text-danger"
             v-if="$v.project.description.$error && !$v.project.description.required"
-          >campo obrigatório *</small>
+            >campo obrigatório *</small
+          >
         </div>
         <div class="form-group">
           <label for="project_desc">Data de criação</label>
-          <datepicker :language="pt" v-model="project.date" />
-          <small
-            class="text-danger"
-            v-if="$v.project.date.$error && !$v.project.date.required"
-          >campo obrigatório *</small>
+          <datepicker :language="pt" v-model="project.date" :value="project.date" />
+          <small class="text-danger" v-if="$v.project.date.$error && !$v.project.date.required"
+            >campo obrigatório *</small
+          >
         </div>
         <div class="form-group">
           <label for="project_link">Link do preview</label>
           <input type="text" class="form-control" id="project_link" v-model="project.link" />
-          <small
-            class="text-danger"
-            v-if="$v.project.link.$error && !$v.project.link.required"
-          >campo obrigatório *</small>
+          <small class="text-danger" v-if="$v.project.link.$error && !$v.project.link.required"
+            >campo obrigatório *</small
+          >
         </div>
         <div class="form-group">
           <div id="images"></div>
@@ -67,7 +77,9 @@
             id="project_tag"
             style="width: 100%;"
           />
-          <small class="text-danger" v-if="$v.tags.$error && !$v.tags.required">campo obrigatório *</small>
+          <small class="text-danger" v-if="$v.tags.$error && !$v.tags.required"
+            >campo obrigatório *</small
+          >
         </div>
         <div class="form-group">
           <label for="project_files" class="btn btn-info">Upload de anexos</label>
@@ -115,20 +127,19 @@
           <i class="fas fa-star cursor-pointer" style="margin-top: -5px; margin-right: 5px;"></i>
           Significa o arquivo que será capa do projeto.
         </div>
-        <small
-          class="text-danger"
-          v-if="$v.files.$error && !$v.files.required"
-        >insira no mínimo um anexo *</small>
+        <small class="text-danger" v-if="$v.files.$error && !$v.files.required"
+          >insira no mínimo um anexo *</small
+        >
         <div class="form-group d-flex justify-content-end">
-          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode=='add'">Add projeto</button>
-          <button
-            @click.prevent="sendData()"
-            class="btn btn-success"
-            v-if="mode=='edit'"
-          >Edit projeto</button>
+          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode == 'add'">
+            Add projeto
+          </button>
+          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode == 'edit'">
+            Edit projeto
+          </button>
         </div>
       </form>
-      <projects-list v-if="mode=='list'" @change="alterMode($event)" />
+      <projects-list v-if="mode == 'list'" @change="alterMode($event)" />
     </div>
   </div>
 </template>
@@ -141,6 +152,8 @@ import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
 import projectsList from '@/components/project_list.vue';
 import { required } from 'vuelidate/lib/validators';
+import { parse, parseISO, format } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 export default {
   components: {
     datepicker,
@@ -181,10 +194,11 @@ export default {
   methods: {
     sendData() {
       this.$v.$touch();
+
       if (this.$v.$error) {
         return;
       }
-      console.log('passou');
+
       this.project.date = new Date(this.project.date).getTime();
 
       const data = new FormData();
@@ -229,7 +243,11 @@ export default {
       this.project = project;
       this.project.tag = '';
       this.tags = [];
-      this.project.date = new Date(this.project.dateClean);
+
+      this.project.date = format(new Date(this.project.date), 'yyyy M d', {
+        locale: pt,
+      });
+
       this.project.Technologies.forEach((t) => {
         that.tags.push({ id: t.id, text: t.name });
       });
@@ -287,8 +305,7 @@ export default {
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter(
-        (i) =>
-          i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
+        (i) => i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
       );
     },
   },
