@@ -7,6 +7,10 @@
       <div class="form-group">
         <label for="tag_name">Nome</label>
         <input type="text" v-model="tag.name" class="form-control" id="tag_name" />
+        <small
+          class="text-danger"
+          v-if="$v.tag.name.$error && !$v.tag.name.required"
+        >campo obrigatório *</small>
       </div>
       <div class="form-group d-flex justify-content-end">
         <button type="button" @click.prevent="saveTag" class="btn btn-success">{{buttonText}}</button>
@@ -77,6 +81,7 @@
 import api from '@/services/api';
 import dao from '@/services/dao';
 import spinner from '@/components/spinner.vue';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   components: {
@@ -95,6 +100,13 @@ export default {
   mounted() {
     this.loadData();
   },
+  validations: {
+    tag: {
+      name: {
+        required,
+      },
+    },
+  },
   methods: {
     loadData(page = 1) {
       this.spinner = true;
@@ -112,6 +124,12 @@ export default {
       dao.url = 'technologies';
     },
     saveTag() {
+      this.$v.tag.$touch();
+
+      if (this.$v.tag.$error) {
+        return;
+      }
+
       const { name } = this.tag;
       if (this.buttonText == 'Edit tag') {
         const tag = this.tag;

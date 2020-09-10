@@ -9,7 +9,10 @@
         <form action="index.html">
           <img src="@/assets/images/avatar.svg" alt="Avatar" />
           <h2>Bem vindo</h2>
-          <div class="input-div one">
+          <div
+            class="input-div one"
+            :class="{'danger':$v.user.email.$error && !$v.user.email.required}"
+          >
             <div class="i">
               <i class="fas fa-user"></i>
             </div>
@@ -18,7 +21,14 @@
               <input v-model="user.email" class="input" type="email" />
             </div>
           </div>
-          <div class="input-div two">
+          <!-- <small
+            class="text-danger"
+            v-if="$v.user.email.$error && !$v.user.emailrequired"
+          >campo obrigatório *</small>-->
+          <div
+            class="input-div two"
+            :class="{'danger':$v.user.email.$error && !$v.user.email.required}"
+          >
             <div class="i">
               <i class="fas fa-lock"></i>
             </div>
@@ -27,13 +37,19 @@
               <input class="input" v-model="user.password" type="password" />
             </div>
           </div>
-          <!-- <button
-            @click.prevent="login"
-            type="submit"
-            class="btn"
-            value="Entrar"
-          >{{loading ? '<i class="fas fa-spinner spinner"></i>' : 'Entrar'}}</button>-->
-
+          <div v-if="$v.user.password.$error" class="d-flex flex-column mt-3 align-items-start">
+            <small
+              class="text-danger"
+              st
+              v-if="!$v.user.password.required"
+            >campo senha é obrigatório *</small>
+            <small
+              class="text-danger mt-1"
+              st
+              v-if="!$v.user.email.required"
+            >campo e-mail é obrigatório *</small>
+            <small class="text-danger mt-1" st v-if="!$v.user.email.email">insira um e-mail válido *</small>
+          </div>
           <button
             v-if="!loading"
             @click.prevent="login"
@@ -51,12 +67,26 @@
 </template>
 
 <script>
+import { required, email, minLength } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
       user: {},
       loading: false,
     };
+  },
+  validations: {
+    user: {
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+      email: {
+        required,
+        email,
+      },
+    },
   },
   mounted() {
     const inputs = document.querySelectorAll('.input');
@@ -81,6 +111,11 @@ export default {
   methods: {
     login() {
       this.loading = true;
+      this.$v.user.$touch();
+      if (this.$v.user.$error) {
+        this.loading = false;
+        return;
+      }
       this.user.name = 'Duane';
       this.user.username = 'dfaria';
 
@@ -181,7 +216,13 @@ form h2 {
 .input-div:before {
   left: 50%;
 }
-
+.danger {
+  border-bottom: 2px solid tomato !important;
+  transition: ease-in-out 0.8s;
+}
+.danger .i i {
+  color: tomato !important;
+}
 .input-div.focus {
   border-bottom: 2px solid #38d39f;
   transition: ease-in-out 0.8s;

@@ -36,5 +36,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  Vuelidate,
   render: (h) => h(App),
 }).$mount('#app');

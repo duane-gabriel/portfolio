@@ -25,18 +25,34 @@
         <div class="form-group">
           <label for="project_name">Nome</label>
           <input type="text" v-model="project.name" class="form-control" id="project_name" />
+          <small
+            class="text-danger"
+            v-if="$v.project.name.$error && !$v.project.name.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_desc">Descrição</label>
           <textarea class="form-control" v-model="project.description" id="project_desc" rows="3"></textarea>
+          <small
+            class="text-danger"
+            v-if="$v.project.description.$error && !$v.project.description.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_desc">Data de criação</label>
           <datepicker :language="pt" v-model="project.date" />
+          <small
+            class="text-danger"
+            v-if="$v.project.date.$error && !$v.project.date.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_link">Link do preview</label>
           <input type="text" class="form-control" id="project_link" v-model="project.link" />
+          <small
+            class="text-danger"
+            v-if="$v.project.link.$error && !$v.project.link.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <div id="images"></div>
@@ -51,6 +67,7 @@
             id="project_tag"
             style="width: 100%;"
           />
+          <small class="text-danger" v-if="$v.tags.$error && !$v.tags.required">campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_files" class="btn btn-info">Upload de anexos</label>
@@ -98,6 +115,10 @@
           <i class="fas fa-star cursor-pointer" style="margin-top: -5px; margin-right: 5px;"></i>
           Significa o arquivo que será capa do projeto.
         </div>
+        <small
+          class="text-danger"
+          v-if="$v.files.$error && !$v.files.required"
+        >insira no mínimo um anexo *</small>
         <div class="form-group d-flex justify-content-end">
           <button @click.prevent="sendData()" class="btn btn-success" v-if="mode=='add'">Add projeto</button>
           <button
@@ -119,7 +140,7 @@ import datepicker from 'vuejs-datepicker';
 import { ptBR } from 'vuejs-datepicker/dist/locale';
 import VueTagsInput from '@johmun/vue-tags-input';
 import projectsList from '@/components/project_list.vue';
-import { required, minLength } from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
 export default {
   components: {
     datepicker,
@@ -145,8 +166,25 @@ export default {
     ],
     filesUpload: [],
   }),
+  validations: {
+    project: {
+      name: { required },
+      description: { required },
+      link: { required },
+      date: { required },
+    },
+    tags: { required },
+    files: {
+      required,
+    },
+  },
   methods: {
     sendData() {
+      this.$v.$touch();
+      if (this.$v.$error) {
+        return;
+      }
+      console.log('passou');
       this.project.date = new Date(this.project.date).getTime();
 
       const data = new FormData();
@@ -170,8 +208,6 @@ export default {
         this.filesUpload.forEach((f) => data.append('files', f));
         Api.post('files', data).then(({ data }) => {
           this.project.filesUpload = data.files;
-          console.log(this.project);
-          // return;
           Api.put('projects', this.project)
             .then((res) => console.log(res))
             .catch((e) => console.log(e));
