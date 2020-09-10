@@ -6,7 +6,6 @@
           <h1 class="text-white">Projetos</h1>
         </header>
       </div>
-      <!--   -->
       <spinner v-if="spinner" class="d-flex justify-content-center mt-5 pt-5" />
       <div class="row pt-5 d-flex justify-content-center mb-3" v-else>
         <div
@@ -14,7 +13,7 @@
           style="width: 95%;flex-wrap:wrap;"
         >
           <div
-            class="pr-2 col-sm-12 col-md-4 col-lg-4 col-xl-4"
+            class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
             v-for="(project, index) of cards"
             :key="project.id"
           >
@@ -24,8 +23,6 @@
               @click="openModal(project,index)"
             >
               <img :src="project.thumbnail" alt class="img-fluid img-star" />
-              <!-- style="height: 200px;width:350px;object-fit: cover;width: 350px;" -->
-              <!-- <div class="img-star" :style="'background:url('+project.thumbnail+')'"></div> -->
               <div :class="'position-absolute img-overlay ' + 'id' + index"></div>
             </figure>
           </div>

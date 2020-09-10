@@ -7,7 +7,7 @@
         </header>
       </div>
       <div class="row pl-lg-4 pl-3 pr-3">
-        <div class="pt-4 pl-0 pl-sm-1 pl-md-4 pl-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="pt-4 pl-3 pl-sm-1 pl-md-4 pl-lg-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <h2 class="font-weight-normal">Educação</h2>
           <timeline-item :data="education" />
         </div>
@@ -18,8 +18,7 @@
       </div>
       <div class="row" v-if="showSkills">
         <div
-          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column
-          align-items-center justify-content-center"
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex flex-column align-items-center justify-content-center"
         >
           <h2 class="font-weight-normal mb-3">
             Backend
@@ -28,8 +27,7 @@
           <progressBar :data="back" v-for="back of backend" :key="Math.random()+back.title" />
         </div>
         <div
-          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
-          d-flex flex-column align-items-center justify-content-center"
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex flex-column align-items-center justify-content-center"
         >
           <h2 class="font-weight-normal mb-3">
             Frontend
@@ -38,9 +36,7 @@
           <progressBar :data="front" v-for="front of frontend" :key="Math.random()+front.title" />
         </div>
         <div
-          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center
-           d-flex justify-content-center
-          d-flex flex-column align-items-center justify-content-center"
+          class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex justify-content-center d-flex flex-column align-items-center justify-content-center"
         >
           <h2 class="font-weight-normal mb-3">
             Others
@@ -176,7 +172,7 @@ export default {
     height: 120px;
     border-top-left-radius: $border_radius;
     border-top-right-radius: $border_radius;
-    margin:0 15px;
+    margin: 0 15px;
   }
   h2 {
     font-size: 1.5rem;
