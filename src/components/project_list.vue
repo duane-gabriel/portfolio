@@ -14,7 +14,7 @@
         <div class="row" v-for="p of projects" :key="p.id">
           <div class="cell">{{ p.id }}</div>
           <div class="cell">{{ p.name }}</div>
-          <div class="cell">{{ p.date }}</div>
+          <div class="cell">{{ Format(new Date(p.date)) }}</div>
           <div class="cell">
             <a :href="p.link" target="_blank">{{ p.link }}</a>
           </div>
@@ -41,6 +41,9 @@
 import api from '@/services/api';
 import dao from '@/services/dao';
 import spinner from '@/components/spinner.vue';
+import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
+
 export default {
   components: {
     spinner,
@@ -82,6 +85,9 @@ export default {
           that.projects = that.projects.filter((p) => p.id !== Number(id));
         })
         .catch((e) => console.log(e));
+    },
+    Format(date) {
+      return format(date, 'd/MM/yyyy', { locale: pt });
     },
   },
 };
