@@ -27,7 +27,23 @@
               <input class="input" v-model="user.password" type="password" />
             </div>
           </div>
-          <input @click.prevent="login" type="submit" class="btn" value="Entrar" />
+          <!-- <button
+            @click.prevent="login"
+            type="submit"
+            class="btn"
+            value="Entrar"
+          >{{loading ? '<i class="fas fa-spinner spinner"></i>' : 'Entrar'}}</button>-->
+
+          <button
+            v-if="!loading"
+            @click.prevent="login"
+            type="submit"
+            class="btn"
+            value="Entrar"
+          >Entrar</button>
+          <button v-else @click.prevent="login" type="submit" class="btn" value="Entrar">
+            <i class="fas fa-spinner spinner"></i>
+          </button>
         </form>
       </div>
     </div>
@@ -39,6 +55,7 @@ export default {
   data() {
     return {
       user: {},
+      loading: false,
     };
   },
   mounted() {
@@ -63,10 +80,12 @@ export default {
   },
   methods: {
     login() {
+      this.loading = true;
       this.user.name = 'Duane';
       this.user.username = 'dfaria';
 
       this.$store.dispatch('LOGIN', { credentials: this.user }).then(() => {
+        this.loading = false;
         this.$router.push({ name: 'Admin.projects' });
       });
     },

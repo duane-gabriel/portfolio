@@ -65,7 +65,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const loggedIn = JSON.parse(localStorage.getItem('vuex'));
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!loggedIn.user.token) {
+    if (!loggedIn.user || !loggedIn.user.token) {
       next('/login');
     } else {
       next();
