@@ -9,11 +9,12 @@
         <button
           class="btn btn-outline-primary mr-4"
           style="padding: 5px; height: 35px; font-size: 13px;"
-          @click="mode = 'list'"
+          @click="
+            mode = 'list';
+            clear();
+          "
           v-if="mode == 'add' || mode == 'edit'"
-        >
-          Listar projetos
-        </button>
+        >Listar projetos</button>
         <button
           class="btn btn-outline-primary mr-4"
           style="padding: 5px; height: 35px; font-size: 13px;"
@@ -22,9 +23,7 @@
             clear();
           "
           v-if="mode == 'list' || mode == 'edit'"
-        >
-          Cadastrar projeto
-        </button>
+        >Cadastrar projeto</button>
       </div>
     </div>
     <div class="row my-3 mx-4">
@@ -32,37 +31,42 @@
         <div class="form-group">
           <label for="project_name">Nome</label>
           <input type="text" v-model="project.name" class="form-control" id="project_name" />
-          <small class="text-danger" v-if="$v.project.name.$error && !$v.project.name.required"
-            >campo obrigatório *</small
-          >
+          <small
+            class="text-danger"
+            v-if="$v.project.name.$error && !$v.project.name.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_desc">Descrição</label>
-          <textarea
-            class="form-control"
-            v-model="project.description"
-            id="project_desc"
-            rows="3"
-          ></textarea>
+          <textarea class="form-control" v-model="project.description" id="project_desc" rows="3"></textarea>
           <small
             class="text-danger"
             v-if="$v.project.description.$error && !$v.project.description.required"
-            >campo obrigatório *</small
-          >
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_desc">Data de criação</label>
           <datepicker :language="pt" v-model="project.date" :value="project.date" />
-          <small class="text-danger" v-if="$v.project.date.$error && !$v.project.date.required"
-            >campo obrigatório *</small
-          >
+          <small
+            class="text-danger"
+            v-if="$v.project.date.$error && !$v.project.date.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_link">Link do preview</label>
           <input type="text" class="form-control" id="project_link" v-model="project.link" />
-          <small class="text-danger" v-if="$v.project.link.$error && !$v.project.link.required"
-            >campo obrigatório *</small
-          >
+          <small
+            class="text-danger"
+            v-if="$v.project.link.$error && !$v.project.link.required"
+          >campo obrigatório *</small>
+        </div>
+        <div class="form-group">
+          <label for="project_link">Link do repositório</label>
+          <input type="text" class="form-control" id="project_link" v-model="project.repository" />
+          <small
+            class="text-danger"
+            v-if="$v.project.repository.$error && !$v.project.repository.required"
+          >campo obrigatório *</small>
         </div>
         <div class="form-group">
           <div id="images"></div>
@@ -77,9 +81,7 @@
             id="project_tag"
             style="width: 100%;"
           />
-          <small class="text-danger" v-if="$v.tags.$error && !$v.tags.required"
-            >campo obrigatório *</small
-          >
+          <small class="text-danger" v-if="$v.tags.$error && !$v.tags.required">campo obrigatório *</small>
         </div>
         <div class="form-group">
           <label for="project_files" class="btn btn-info">Upload de anexos</label>
@@ -95,13 +97,18 @@
           />
         </div>
         <div class="form-group" v-if="files.length > 0">
+          <span class="h6 mb-4">Imagens</span>
           <ul>
             <li
               class="d-flex justify-content-between mb-1"
-              v-for="(file, index) of files"
+              v-for="(file, index) of files.filter((f) => f.name.indexOf('mp4') === -1)"
               :key="file.name + Math.random()"
             >
-              <span class="btn btn-link p-0" @click="$emit('visible', index)">{{ file.name }}</span>
+              <span class="btn btn-link p-0" @click="$emit('visible', index)">
+                {{
+                file.name.toLowerCase()
+                }}
+              </span>
               <div>
                 <i
                   class="fas fa-star cursor-pointer"
@@ -123,20 +130,42 @@
                 ></i>
               </div>
             </li>
+            <li style="list-style: none;">
+              <small>
+                <i class="fas fa-star cursor-pointer" style="margin-top: -5px; margin-right: 5px;"></i>
+                Significa o arquivo que será capa do projeto.
+              </small>
+            </li>
           </ul>
-          <i class="fas fa-star cursor-pointer" style="margin-top: -5px; margin-right: 5px;"></i>
-          Significa o arquivo que será capa do projeto.
+
+          <ul v-if="files.filter((f) => f.name.indexOf('mp4') !== -1).length > 0">
+            <span class="h6 mb-4">Vídeos</span>
+            <li
+              class="d-flex justify-content-between mb-1"
+              v-for="file of files.filter((f) => f.name.indexOf('mp4') !== -1)"
+              :key="file.name + Math.random()"
+            >
+              <span class="btn btn-link p-0" @click="$emit('visible', index)">{{ file.name }}</span>
+
+              <i class="fas fa-times close" @click="removeFile(file.name)" style="margin-top: 3px;"></i>
+            </li>
+          </ul>
         </div>
-        <small class="text-danger" v-if="$v.files.$error && !$v.files.required"
-          >insira no mínimo um anexo *</small
-        >
+        <small
+          class="text-danger"
+          v-if="$v.files.$error && !$v.files.required"
+        >insira no mínimo um anexo *</small>
         <div class="form-group d-flex justify-content-end">
-          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode == 'add'">
-            Add projeto
-          </button>
-          <button @click.prevent="sendData()" class="btn btn-success" v-if="mode == 'edit'">
-            Edit projeto
-          </button>
+          <button
+            @click.prevent="sendData()"
+            class="btn btn-success"
+            v-if="mode == 'add'"
+          >Add projeto</button>
+          <button
+            @click.prevent="update()"
+            class="btn btn-success"
+            v-if="mode == 'edit'"
+          >Edit projeto</button>
         </div>
       </form>
       <projects-list v-if="mode == 'list'" @change="alterMode($event)" />
@@ -174,7 +203,7 @@ export default {
     },
     autocompleteItems: [
       {
-        text: 'dwadwa',
+        text: '...',
       },
     ],
     filesUpload: [],
@@ -185,6 +214,9 @@ export default {
       description: { required },
       link: { required },
       date: { required },
+      repository: {
+        required,
+      },
     },
     tags: { required },
     files: {
@@ -207,6 +239,7 @@ export default {
       data.append('description', this.project.description);
       data.append('date', this.project.date);
       data.append('link', this.project.link);
+      data.append('repository', this.project.repository);
       data.append('indexFileStar', this.fileStar.id);
 
       this.tags.forEach((tag) => data.append('technologies', tag.text));
@@ -215,25 +248,54 @@ export default {
         data.append('files', file);
       });
 
-      if (this.mode == 'edit') {
-        this.project.indexFileStar = this.fileStar.id;
-        this.project.Technologies = [...this.tags];
-        const data = new FormData();
+      // if (this.mode == 'edit') {
+      //   this.project.indexFileStar = this.fileStar.id;
+      //   this.project.Technologies = [...this.tags];
+      //   const data = new FormData();
+      //   this.filesUpload.forEach((f) => data.append('files', f));
+      //   Api.post('files', data).then(({ data }) => {
+      //     this.project.filesUpload = data.files;
+      //     Api.put('projects', this.project)
+      //       .then((res) => {
+      //         console.log(res);
+      //         this.$message.success('Projeto atualizado', {
+      //           duration: 3000,
+      //         });
+      //       })
+      //       .catch((e) => console.log(e));
+      //     return;
+      //   });
+      //   return;
+      // } else {
+      Api.post('projects', data)
+        .then()
+        .catch((e) => console.log(e));
+      this.clear();
+      // }
+    },
+    async update() {
+      this.project.date = new Date(this.project.date).getTime();
+      this.project.indexFileStar = this.fileStar.id;
+
+      this.project.Technologies = [...this.tags];
+
+      const data = new FormData();
+      if (this.filesUpload.length > 0) {
         this.filesUpload.forEach((f) => data.append('files', f));
-        Api.post('files', data).then(({ data }) => {
-          this.project.filesUpload = data.files;
-          Api.put('projects', this.project)
-            .then((res) => console.log(res))
-            .catch((e) => console.log(e));
-          return;
-        });
-        return;
-      } else {
-        Api.post('projects', data)
-          .then()
-          .catch((e) => console.log(e));
-        this.clear();
+        const { data } = await Api.post('files', data);
+        this.project.filesUpload = data.files;
+        // .then(({ data }) => {
+        //   this.project.filesUpload = data.files;
+        // });
       }
+      Api.put('projects', this.project)
+        .then((res) => {
+          console.log(res);
+          this.$message.success('Projeto atualizado', {
+            duration: 3000,
+          });
+        })
+        .catch((e) => console.log(e));
     },
     removeFile(name) {
       this.files = this.files.filter((file) => file.name !== name);
@@ -252,6 +314,12 @@ export default {
         that.tags.push({ id: t.id, text: t.name });
       });
       this.files = this.project.Files;
+
+      this.files.forEach((f, i) => {
+        if (f.star) this.fileStar.id = i;
+        console.log(f);
+      });
+
       this.mode = 'edit';
       this.buttonText = 'Edit project';
     },
@@ -262,12 +330,15 @@ export default {
       this.project = { tag: '' };
       this.tags = [];
       this.files = [];
+      this.fileStar.id = 0;
+      this.filesUpload = [];
     },
     handleFileUpload() {
       const Files = this.$refs.file.files;
       const that = this;
 
       that.files = [...Array.from(that.files), ...Array.from(Files)];
+      console.log(that.files);
 
       that.files.forEach((file) => {
         if (!file.url) {
@@ -275,14 +346,13 @@ export default {
         }
       });
       if (this.mode == 'edit') {
-        console.log('caiu na trap');
         this.filesUpload = [...this.filesUpload, ...Array.from(Files)];
       }
     },
   },
   watch: {
     files: {
-      handler(val) {
+      handler(newFiles, oldFiles) {
         this.$store.state.files = this.files;
       },
       deep: true,
@@ -305,7 +375,8 @@ export default {
   computed: {
     filteredItems() {
       return this.autocompleteItems.filter(
-        (i) => i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
+        (i) =>
+          i.text.toLowerCase().indexOf(this.project.tag.toLowerCase()) !== -1
       );
     },
   },
