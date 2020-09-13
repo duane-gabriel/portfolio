@@ -1,7 +1,7 @@
 <template>
   <div class="spinner-border text-primary" role="status">
-    <i class="fas fa-spinner spinner mr-3"></i>
-    carregando...
+    <i class="fas fa-spinner spinner"></i>
+    <!-- <span class="ml-2">carregando...</span> -->
   </div>
 </template>
 

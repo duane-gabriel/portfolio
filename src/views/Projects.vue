@@ -78,6 +78,7 @@ export default {
       const that = this;
       api.get('projects').then(({ data }) => {
         let cards = this.cards;
+
         data.forEach((p, i) => {
           let id = p.id;
           let title = p.name;
@@ -94,11 +95,21 @@ export default {
           let preview = p.link;
           let content = '';
           let thumbnail = '';
+
           p.Files.forEach((f) => {
-            if (f.star) {
-              thumbnail = f.url;
+            if (f.name.indexOf('mp4') === -1) {
+              if (f.star) {
+                thumbnail = f.url;
+              }
+              content += `<img src="${f.url}"/>`;
+            } else {
+              let oldContent = content;
+              content = `<video controls style='max-width: 100%;' class="mb-2">
+                <source src="${f.url}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>`;
+              content += oldContent;
             }
-            content += `<img src="${f.url}"/>`;
           });
 
           let obj = {
