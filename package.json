@@ -24,6 +24,7 @@
     "vue-grid-layout": "^2.3.8",
     "vue-persist": "^0.4.0",
     "vue-router": "^3.2.0",
+    "vue-update-message": "^1.0.7",
     "vuejs-datatable": "^2.0.0-alpha.7",
     "vuejs-datepicker": "^1.6.2",
     "vuelidate": "^0.7.5",

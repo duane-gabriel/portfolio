@@ -11,7 +11,15 @@
         :class="['carousel-item', index === activeIndex ? 'active' : '']"
         :key="image.src || image.url"
       >
-        <img class="d-block w-100" :src="image.src || image.url" alt="First slide" />
+        <img
+          v-if="image.name.indexOf('mp4')===-1"
+          class="d-block w-100"
+          :src="image.src || image.url"
+          alt="First slide"
+        />
+        <video v-else controls style="max-width: 100%;" class="mb-2">
+          <source :src="image.src || image.url" type="video/mp4" />Your browser does not support the video tag.
+        </video>
       </div>
     </div>
     <a
