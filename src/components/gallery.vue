@@ -82,6 +82,15 @@ export default {
   max-height: 1200px;
   width: auto;
   height: auto;
+
+  .carousel-item img {
+    max-height: 80vh;
+    max-width: 100%;
+    height: auto;
+    width: auto !important;
+    margin: 0 auto;
+  }
+
   .icon {
     font-size: 50px;
     color: #000;

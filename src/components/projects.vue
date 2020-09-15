@@ -282,8 +282,8 @@ export default {
       const data = new FormData();
       if (this.filesUpload.length > 0) {
         this.filesUpload.forEach((f) => data.append('files', f));
-        const { data } = await Api.post('files', data);
-        this.project.filesUpload = data.files;
+        const { data: res } = await Api.post('files', data);
+        this.project.filesUpload = res.files;
         // .then(({ data }) => {
         //   this.project.filesUpload = data.files;
         // });

@@ -26,7 +26,7 @@
       </div>
       <div class="row mt-5 px-4 px-sm-0 px-md-0 px-lg-0">
         <div
-          class="modal-project-content col-md-8 col-lg-8 mt-1 mt-sm-5 mt-md-5 mt-lg-5"
+          class="modal-project-content col-md-8 col-lg-8 mt-1 mt-sm-5 mt-md-5 mt-lg-5 d-flex flex-column align-items-center"
           v-html="data.content"
         ></div>
         <div class="col-md-4 col-lg-4 mt-5">
