@@ -10,7 +10,7 @@
       <div class="row pt-5 d-flex justify-content-center mb-3" v-else>
         <div
           class="grid-container d-flex justify-content-center"
-          style="width: 95%;flex-wrap:wrap;"
+          style="width: 95%; flex-wrap: wrap;"
         >
           <div
             class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
@@ -20,7 +20,7 @@
             <figure
               @mouseover="imgHover('id' + index, 'over')"
               @mouseout="imgHover('id' + index, 'out')"
-              @click="openModal(project,index)"
+              @click="openModal(project, index)"
             >
               <img :src="project.thumbnail" alt class="img-fluid img-star" />
               <div :class="'position-absolute img-overlay ' + 'id' + index"></div>
@@ -130,6 +130,11 @@ export default {
     },
     nav(index) {
       this.openModal(this.cards[index], index);
+    },
+  },
+  head: {
+    title: {
+      inner: 'Projetos',
     },
   },
 };

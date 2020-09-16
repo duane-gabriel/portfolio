@@ -22,6 +22,7 @@
     "prettier": "^2.0.5",
     "vue": "^2.6.11",
     "vue-grid-layout": "^2.3.8",
+    "vue-head": "^2.2.0",
     "vue-persist": "^0.4.0",
     "vue-router": "^3.2.0",
     "vue-update-message": "^1.0.7",

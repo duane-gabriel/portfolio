@@ -11,7 +11,7 @@
           <h2>Bem vindo</h2>
           <div
             class="input-div one"
-            :class="{'danger':$v.user.email.$error && !$v.user.email.required}"
+            :class="{ danger: $v.user.email.$error && !$v.user.email.required }"
           >
             <div class="i">
               <i class="fas fa-user"></i>
@@ -27,7 +27,7 @@
           >campo obrigatório *</small>-->
           <div
             class="input-div two"
-            :class="{'danger':$v.user.email.$error && !$v.user.email.required}"
+            :class="{ danger: $v.user.email.$error && !$v.user.email.required }"
           >
             <div class="i">
               <i class="fas fa-lock"></i>
@@ -38,25 +38,19 @@
             </div>
           </div>
           <div v-if="$v.user.password.$error" class="d-flex flex-column mt-3 align-items-start">
-            <small
-              class="text-danger"
-              st
-              v-if="!$v.user.password.required"
-            >campo senha é obrigatório *</small>
-            <small
-              class="text-danger mt-1"
-              st
-              v-if="!$v.user.email.required"
-            >campo e-mail é obrigatório *</small>
-            <small class="text-danger mt-1" st v-if="!$v.user.email.email">insira um e-mail válido *</small>
+            <small class="text-danger" st v-if="!$v.user.password.required"
+              >campo senha é obrigatório *</small
+            >
+            <small class="text-danger mt-1" st v-if="!$v.user.email.required"
+              >campo e-mail é obrigatório *</small
+            >
+            <small class="text-danger mt-1" st v-if="!$v.user.email.email"
+              >insira um e-mail válido *</small
+            >
           </div>
-          <button
-            v-if="!loading"
-            @click.prevent="login"
-            type="submit"
-            class="btn"
-            value="Entrar"
-          >Entrar</button>
+          <button v-if="!loading" @click.prevent="login" type="submit" class="btn" value="Entrar">
+            Entrar
+          </button>
           <button v-else @click.prevent="login" type="submit" class="btn" value="Entrar">
             <i class="fas fa-spinner spinner"></i>
           </button>
@@ -123,6 +117,11 @@ export default {
         this.loading = false;
         this.$router.push({ name: 'Admin.projects' });
       });
+    },
+  },
+  head: {
+    title: {
+      inner: 'Login',
     },
   },
 };

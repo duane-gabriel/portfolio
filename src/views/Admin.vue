@@ -13,8 +13,9 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              style="color:#000;"
-            >Duane Faria</a>
+              style="color: #000;"
+              >Duane Faria</a
+            >
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item" href="#" @click="$store.dispatch('logout')">Sair</a>
@@ -25,7 +26,7 @@
     </div>
     <div class="container mt-5">
       <div class="row">
-        <div class="col-11 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin:0 auto;">
+        <div class="col-11 col-sm-12 col-md-4 col-lg-4 col-xl-4" style="margin: 0 auto;">
           <menu-admin />
         </div>
         <div
@@ -74,6 +75,11 @@ export default {
     index() {
       this.index = Number(this.index.split('_')[0]);
       this.visible = true;
+    },
+  },
+  head: {
+    title: {
+      inner: 'Admin',
     },
   },
 };

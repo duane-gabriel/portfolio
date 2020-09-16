@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { VuejsDatatableFactory } from 'vuejs-datatable';
 import Vuelidate from 'vuelidate';
 import messageService from 'vue-update-message';
+import VueHead from 'vue-head';
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -27,6 +29,8 @@ Vue.directive('click-outside', {
 Vue.use(VuejsDatatableFactory);
 
 Vue.use(Vuelidate);
+
+Vue.use(VueHead);
 
 Vue.use(messageService);
 

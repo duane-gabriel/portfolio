@@ -24,7 +24,7 @@
             Backend
             <span class="text-primary">Skills</span>
           </h2>
-          <progressBar :data="back" v-for="back of backend" :key="Math.random()+back.title" />
+          <progressBar :data="back" v-for="back of backend" :key="Math.random() + back.title" />
         </div>
         <div
           class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex flex-column align-items-center justify-content-center"
@@ -33,7 +33,7 @@
             Frontend
             <span class="text-primary">Skills</span>
           </h2>
-          <progressBar :data="front" v-for="front of frontend" :key="Math.random()+front.title" />
+          <progressBar :data="front" v-for="front of frontend" :key="Math.random() + front.title" />
         </div>
         <div
           class="pt-3 col-sm-12 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-center d-flex justify-content-center d-flex flex-column align-items-center justify-content-center"
@@ -42,7 +42,7 @@
             Others
             <span class="text-primary">Skills</span>
           </h2>
-          <progressBar :data="other" v-for="other of others" :key="Math.random()+other.title" />
+          <progressBar :data="other" v-for="other of others" :key="Math.random() + other.title" />
         </div>
       </div>
     </div>
@@ -63,15 +63,13 @@ export default {
           title: 'Curso técnico em informática',
           year: 'Jan 2015 - Dec 2017',
           institution: 'Centro Paula Souza (Etec)',
-          description:
-            'Curso técnico em informática com ênfase em programação.',
+          description: 'Curso técnico em informática com ênfase em programação.',
         },
         {
           title: 'Engenharia da Computação',
           year: 'Jan 2018 - Atualmente',
           institution: 'Centro Universitário Eniac',
-          description:
-            'Atualmente cursando o terceiro ano de engenharia da computação.',
+          description: 'Atualmente cursando o terceiro ano de engenharia da computação.',
         },
       ],
       expirience: [
@@ -158,6 +156,11 @@ export default {
         },
       ],
     };
+  },
+  head: {
+    title: {
+      inner: 'Currículo',
+    },
   },
 };
 </script>
