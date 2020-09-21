@@ -45,7 +45,8 @@
 import modalProject from '@/components/modal-project.vue';
 import api from '@/services/api';
 import spinner from '@/components/spinner.vue';
-
+import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt-BR';
 export default {
   components: { modalProject, spinner },
   data() {
@@ -91,11 +92,11 @@ export default {
           });
 
           let description = p.description;
-          let date = p.date;
+          let date = format(new Date(p.date), 'd/MM/yyyy', { locale: pt });
           let preview = p.link;
           let content = '';
           let thumbnail = '';
-
+          let repository = p.repository;
           p.Files.forEach((f) => {
             if (f.name.indexOf('mp4') === -1) {
               if (f.star) {
@@ -119,6 +120,7 @@ export default {
             description,
             date,
             preview,
+            repository,
             content,
             thumbnail,
           };

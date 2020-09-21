@@ -37,6 +37,10 @@
               <a target="_blank" :href="data.preview" style="color:#424242">{{data.preview}}</a>
             </div>
             <div class="mt-3">
+              <i class="fab fa-github mr-2"></i>
+              <a target="_blank" :href="data.repository" style="color:#424242">{{data.repository}}</a>
+            </div>
+            <div class="mt-3">
               <i class="fas fa-calendar-minus mr-2"></i>
               <span style="color:#424242">{{data.date}}</span>
             </div>
