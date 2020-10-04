@@ -7,15 +7,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    menuIsActive: 'home',
     user: null,
     files: [],
     menuAdmin: 'Projetos',
   },
   mutations: {
-    setMenu(state, { payLoad }) {
-      state.menuIsActive = payLoad.menuItem;
-    },
     SET_USER_DATA(state, payLoad) {
       state.user = payLoad.data.user;
       axios.defaults.headers.common.Authorization = `Bearer ${state.user.token}`;
@@ -30,9 +26,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    SET_MENU(context, payLoad) {
-      context.commit('setMenu', payLoad);
-    },
     LOGIN({ commit }, payLoad) {
       return axios
         .post(`${process.env.VUE_APP_API_URL}session`, payLoad.credentials)

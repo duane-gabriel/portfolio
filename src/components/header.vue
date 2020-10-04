@@ -11,7 +11,7 @@
       </span>
       <ul>
         <li
-          :class="[ $store.state.menuIsActive == item.name ? 'active' : '','menuItem']"
+          :class="[ $route.name == item.link ? 'active' : '','menuItem']"
           v-for="item of menuItens"
           @mouseover="hover(1,$event)"
           @mouseout="hover(0,$event)"
@@ -53,10 +53,6 @@ export default {
       this.mobile = window.innerWidth <= 768 ? true : false;
     },
     setMenu(menuItem) {
-      this.$store.dispatch("SET_MENU", {
-        payLoad: { menuItem: menuItem.name }
-      });
-
       if (this.$route.name != menuItem.link) {
         this.$router.push({ name: menuItem.link });
         return;
