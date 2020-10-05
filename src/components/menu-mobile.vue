@@ -15,7 +15,7 @@
         <li
           @click="setMenu(item)"
           :class="['mb-3 disable text-white',
-        $store.state.menuIsActive == item.name ? 'font-weight-bold':'']"
+        $route.name == item.link ? 'font-weight-bold':'']"
           v-for="item of itens"
           :key="Math.random()+item.name"
         >{{item.name}}</li>
@@ -35,10 +35,6 @@ export default {
   },
   methods: {
     setMenu(menuItem) {
-      this.$store.dispatch("SET_MENU", {
-        payLoad: { menuItem: menuItem.name }
-      });
-
       if (this.$route.name != menuItem.link) {
         this.$router.push({ name: menuItem.link });
         this.isAside = false;
@@ -54,7 +50,7 @@ export default {
 <style  lang="scss">
 .menu-mobile {
   @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-  
+
   $heightMenu: 60;
   $heightSide: $heightMenu - 10;
   background-color: $main_color;

@@ -3,7 +3,7 @@
   <div class="apresentation">
     <div class="container">
       <header class="d-flex">
-        <div class="row w-lg-75">
+        <div class="row w-lg-75" style="height:auto">
           <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
             <div class="picture-frame">
               <a href="https://www.linkedin.com/in/duane-faria-224886153/" target="_blank">
@@ -171,6 +171,7 @@ export default {
         margin-top: 15px;
         display: flex;
         justify-content: space-around;
+        margin-bottom: 10px;
         &-circle {
           background: #fff;
           height: 35px;

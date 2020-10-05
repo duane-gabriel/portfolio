@@ -142,4 +142,10 @@ header.menu {
     margin-bottom: 15px;
   }
 }
+@media(max-width:768px){
+  header.menu{
+    margin-top:0px !important;
+    margin-bottom: 20px;
+  }
+}
 </style>
