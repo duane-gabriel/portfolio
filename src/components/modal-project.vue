@@ -21,8 +21,8 @@
         </span>
       </div>
 
-      <div class="row d-flex justify-content-center mt-5 mt-sm-5 mt-md-5 mt-lg-2">
-        <h1 class="h2 ml-4 font-weight-normal">{{data.title}}</h1>
+      <div class="row d-flex justify-content-center mt-5 mt-sm-5 mt-md-5 mt-lg-2" style="padding: 0 10px;margin:0;">
+        <h1 class="h2 ml-4 font-weight-normal" style="line-height: 48px;">{{data.title}}</h1>
       </div>
       <div class="row mt-5 px-4 px-sm-0 px-md-0 px-lg-0">
         <div

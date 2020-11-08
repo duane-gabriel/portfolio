@@ -1,7 +1,7 @@
 <template>
   <div class="project-list w-100">
     <spinner v-if="spinner" class="d-flex justify-content-center" />
-    <div class="wrap-table100" v-else>
+    <div class="wrap-table100" v-else @dragover="containerDragOver($event)">
       <div class="table">
         <div class="row header bg-primary">
           <div class="cell pr-4">Id</div>
@@ -11,7 +11,8 @@
           <div class="cell pr-4">Ações</div>
         </div>
 
-        <div class="row" v-for="p of projects" :key="p.id">
+        <div class="row draggable" v-for="(p) of projects" :key="p.id" @dragstart="dragstart($event,p.position)" @dragenter="dragenter($event)" @dragover.prevent="dragover($event)"
+        draggable @dragend="dragend($event)" @drop.stop="(e)=>drop(e,p.position)">
           <div class="cell">{{ p.id }}</div>
           <div class="cell">{{ p.name }}</div>
           <div class="cell">{{ Format(new Date(p.date)) }}</div>
@@ -58,18 +59,53 @@ export default {
     this.requestProjects();
   },
   methods: {
+    drop(e,toIndex){
+
+      let itemsToUpdate = [];
+
+      const fromIndex = Number(e.dataTransfer.getData('fromIndex'));
+      console.log('Vindo de  ',fromIndex)
+      console.log('Indo para ',toIndex)
+
+
+      console.log(this.projects[this.projects.findIndex(({position}) => position == fromIndex)]);
+      console.log(this.projects[this.projects.findIndex(({position}) => position == toIndex)]);
+
+      // this.projects[this.projects.findIndex(({position}) => position == fromIndex)].position = toIndex;
+
+      // this.projects[this.projects.findIndex(({position}) => position == toIndex)].position = fromIndex;
+
+      // this.projects.position = toIndex;
+      // this.projects[toIndex].position = fromIndex;
+
+      itemsToUpdate.push({id:this.projects[fromIndex].id,position:toIndex});
+      itemsToUpdate.push({id:this.projects[toIndex].id,position:fromIndex});
+      console.log(itemsToUpdate);
+
+      const projectToMove = this.projects.splice(fromIndex,1)[0]
+      this.projects.splice(toIndex,0,projectToMove);
+
+      // itemsToUpdate.forEach( (itemToUpdate)=> {
+      //    dao.put({id:itemToUpdate.id, position:itemToUpdate.position}).then((res)=> console.log(res));
+      // });
+    },
+    containerDragOver(e){
+    },
+    dragstart(e,index){
+      e.dataTransfer.dropEffect  = 'move';
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('fromIndex', index);
+    },
+    dragenter(e){
+    },
+    dragover(e){
+    },
+    dragend(e){
+    },
     requestProjects() {
       dao.url = 'projects';
       this.spinner = true;
       dao.get().then(({ data }) => {
-        data.sort((a, b) => {
-          if (a.id > b.id) {
-            return 1;
-          }
-          if (a.id < b.id) {
-            return -1;
-          }
-        });
         this.projects = data;
         this.spinner = false;
       });
