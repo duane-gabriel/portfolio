@@ -60,34 +60,19 @@ export default {
   },
   methods: {
     drop(e,toIndex){
-
-      let itemsToUpdate = [];
-
       const fromIndex = Number(e.dataTransfer.getData('fromIndex'));
-      console.log('Vindo de  ',fromIndex)
-      console.log('Indo para ',toIndex)
 
+      let firstIndex = this.projects.findIndex(({position}) => position == fromIndex);
+      let secondIndex = this.projects.findIndex(({position}) => position == toIndex);
 
-      console.log(this.projects[this.projects.findIndex(({position}) => position == fromIndex)]);
-      console.log(this.projects[this.projects.findIndex(({position}) => position == toIndex)]);
-
-      // this.projects[this.projects.findIndex(({position}) => position == fromIndex)].position = toIndex;
-
-      // this.projects[this.projects.findIndex(({position}) => position == toIndex)].position = fromIndex;
-
-      // this.projects.position = toIndex;
-      // this.projects[toIndex].position = fromIndex;
-
-      itemsToUpdate.push({id:this.projects[fromIndex].id,position:toIndex});
-      itemsToUpdate.push({id:this.projects[toIndex].id,position:fromIndex});
-      console.log(itemsToUpdate);
-
-      const projectToMove = this.projects.splice(fromIndex,1)[0]
-      this.projects.splice(toIndex,0,projectToMove);
-
-      // itemsToUpdate.forEach( (itemToUpdate)=> {
-      //    dao.put({id:itemToUpdate.id, position:itemToUpdate.position}).then((res)=> console.log(res));
-      // });
+      this.projects[firstIndex].position = secondIndex;
+      this.projects[secondIndex].position = firstIndex;
+      this.projects.sort((a,b)=> {
+          if(a.position > b.position) return 1;
+          else if(a.position < b.position) return -1;
+      })
+      dao.put({id:this.projects[firstIndex].id, position:this.projects[firstIndex].position});
+      dao.put({id:this.projects[secondIndex].id, position:this.projects[secondIndex].position});
     },
     containerDragOver(e){
     },

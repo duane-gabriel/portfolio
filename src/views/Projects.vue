@@ -84,10 +84,10 @@ export default {
           let id = p.id;
           let title = p.name;
           let tecnologies = p.Technologies.sort((a, b) => {
-            if (a.id > b.id) {
-              return 1;
-            } else {
+            if (a.position > b.position) {
               return -1;
+            } else {
+              return 1;
             }
           });
 
