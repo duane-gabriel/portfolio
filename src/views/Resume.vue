@@ -55,6 +55,10 @@ import progressBar from '@/components/progress-bar.vue';
 
 export default {
   components: { timelineItem, progressBar },
+  mounted() {
+    this.education.reverse();
+    this.expirience.reverse();
+  },
   data() {
     return {
       showSkills: false,
@@ -63,52 +67,48 @@ export default {
           title: 'Curso técnico em informática',
           year: 'Jan 2015 - Dec 2017',
           institution: 'Centro Paula Souza (Etec)',
-          description: 'Curso técnico em informática com ênfase em programação.',
+          description: `Curso técnico em informática com ênfase em
+          programação, 3 anos de duração. Nessa instituição foise ensinado lógica de programação, programação
+          orientada a objetos e banco de dados, usando as
+          linguagens: Java, C#, PHP, Javascript e MySql.`,
         },
         {
-          title: 'Engenharia da Computação',
+          title: 'Engenharia da computação',
           year: 'Jan 2018 - Atualmente',
           institution: 'Centro Universitário Eniac',
-          description: 'Atualmente cursando o terceiro ano de engenharia da computação.',
+          description: 'Curso iniciado em 2018, sendo feito com bolsa de estudos integral, obtida através do Enem.',
         },
       ],
       expirience: [
         {
-          title: 'Programador',
-          year: 'Set 2018 - Mai 2020',
-          institution: 'maicrosôfté',
+          title: `Estágio em desenvolvimento de software
+`,
+          year: 'Set 2018 - Abr 2019',
+          institution: 'Hitcode',
           description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+          `No decorrer do estágio foram utilizadas as tecnologias
+          Html, Css 3, Javascript Es6, Bootstrap 3 e 4, Jquery e
+          Php 7. Desenvolveu-se um projeto de customer
+          service, contendo crud, integração com api e duas
+          dashboards, as quais possuiam gráficos das bibliotecas
+          morris.js e charts.js.
+          `,
         },
         {
-          title: 'Programador',
-          year: 'Set 2018 - Mai 2020',
-          institution: 'maicrosôfté',
+          title: 'Programador junior',
+          year: 'Mai 2019 - Jul 2019',
+          institution: 'Belga informática',
           description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+            'Atuou-se em um projeto web de locação de imóveis, - primeiravista.com.br – utilizando-se das tecnologias, Html, Css, Javascript, Boostrap, Jquery, Ajax, Php e Slim Framework.',
         },
         {
-          title: 'Programador',
-          year: 'Set 2018 - Mai 2020',
-          institution: 'maicrosôfté',
+          title: 'Programador junior',
+          year: 'Ago 2019 - Abr 2020',
+          institution: 'Fasters',
           description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,',
+            'Trabalhou-se com projetos usando as tecnologias Bootstrap 4, Javascript, Vuejs, NodeJs, Php 7, MySql e SqlServer. Os projetos eram geridos utilizando metodologias ágeis.',
         },
       ],
-      // expirience: [
-      //   {
-      //     title: 'Estágio em desenvolvimento de software',
-      //     year: 'Set 2018 - Mar 2019',
-      //     institution: 'hitcode',
-      //     description: 'Estágio em dev',
-      //   },
-      //   {
-      //     title: 'Programador Junior',
-      //     year: 'Abr 2019 - Mar 2020',
-      //     institution: 'fasters',
-      //     description: 'Programador junior',
-      //   },
-      // ],
       backend: [
         {
           title: 'Nodejs',

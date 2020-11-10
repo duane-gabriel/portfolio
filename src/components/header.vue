@@ -36,7 +36,7 @@ export default {
       mobile: false,
       menuItens: [
         { name: "home", link: "Home" },
-        { name: "curriculo", link: "Resume" },
+        { name: "currículo", link: "Resume" },
         { name: "projetos", link: "Projects" }
       ],
       isHover: ""

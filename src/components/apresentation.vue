@@ -6,12 +6,10 @@
         <div class="row w-lg-75" style="height:auto">
           <div class="col-lg-6 col-sm-12 d-flex justify-content-center">
             <div class="picture-frame">
-              <a href="https://www.linkedin.com/in/duane-faria-224886153/" target="_blank">
                 <img
                   src="https://st.depositphotos.com/1129232/5088/v/950/depositphotos_50880205-stock-illustration-vector-hipster-man-icon-hipster.jpg"
                   alt
                 />
-              </a>
             </div>
           </div>
           <content class="text col-lg-6 col-sm-12">
@@ -28,8 +26,10 @@
                 </a>
               </div>
               <div class="social-media-circle">
+                <a href="https://www.linkedin.com/in/duane-faria-224886153/" target="_blank">
                 <!-- <img class="img-fluid" src="https://img.icons8.com/ios/50/000000/linkedin-2.png" /> -->
                 <i class="fab fa-linkedin-in"></i>
+                </a>
               </div>
               <div class="social-media-circle">
                 <a href="https://github.com/duane-gabriel" target="_blank">
@@ -48,12 +48,11 @@
             <p class="description-title">
               Sobre
               <span class="text-primary">mim</span>
-            </p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique maxime non eum eius,
-            impedit enim recusandae delectus!
+            </p>Olá, muito prazer, meu nome é Duane. Eu gosto de livros, séries, games e tocar saxofone. Eu possuo conhecimentos em Reactjs, Vuejs, React Native, Nodejs e Php.
             <br />
             <a
-              href="./curriculo.txt"
-              download="curriculo.txt"
+              href="./duane-faria.pdf"
+              download="duane-faria.pdf"
               class="mt-4 btn btn-info"
             >download curriculo</a>
           </blockquote>
@@ -77,9 +76,9 @@ export default {
     return {
       infos: [
         { question: 'Idade', answer: 21 },
-        { question: 'Endereco', answer: 'São Paulo' },
-        { question: 'E-mail', answer: 'duane_gabriel@hotmail.com' },
-        { question: 'Celular', answer: '(11) 97712-4554' },
+        { question: 'Endereço', answer: 'São Paulo' },
+        { question: 'E-mail', answer: 'duane.faria@etec.sp.gov.br' },
+        { question: 'Celular', answer: '(11) 96504-5245' },
       ],
     };
   },
