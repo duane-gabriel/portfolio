@@ -131,11 +131,14 @@ export default {
   .modal-project-content {
     img {
       max-width: 100%;
-      margin-bottom: 10px;
-      &:last-child {
+      margin-bottom:20px;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 10px;
+       &:last-child {
         margin-bottom: 0;
       }
     }
   }
+
 }
 </style>

@@ -18,11 +18,6 @@ export default {
     window.onbeforeunload = function () {
       const storage = JSON.parse(localStorage.getItem('vuex'));
       storage.menuIsActive = 'home';
-      // {
-      //     menuIsActive: 'home',
-      //     user: {},
-      //     menuAdmin: 'Projetos',
-      //   }
       localStorage.setItem('vuex', JSON.stringify(storage));
     };
   },

@@ -7,6 +7,7 @@ import Login from '../views/Login.vue';
 import Admin from '../views/Admin.vue';
 import projects from '../components/projects.vue';
 import tags from '../components/tags.vue';
+import NotFound from '../views/404.vue';
 
 Vue.use(VueRouter);
 
@@ -53,7 +54,7 @@ const routes = [
   },
   {
     path: '*',
-    component: Home,
+    component: NotFound,
   },
 ];
 const router = new VueRouter({
