@@ -156,16 +156,24 @@
           v-if="$v.files.$error && !$v.files.required"
         >insira no mínimo um anexo *</small>
         <div class="form-group d-flex justify-content-end">
-          <button
+           <button
             @click.prevent="sendData()"
             class="btn btn-success"
             v-if="mode == 'add'"
-          >Add projeto</button>
+            :disabled="loading"
+          > {{loading ? '' : 'Add projeto'}}
+          <i class="fas fa-spinner spinner" v-if="loading && mode == 'add'"></i>
+          </button>
           <button
             @click.prevent="update()"
             class="btn btn-success"
             v-if="mode == 'edit'"
-          >Edit projeto</button>
+            :disabled="loading"
+
+          >
+          {{loading ? '' : 'Editar projeto'}}
+          <i class="fas fa-spinner spinner" v-if="loading && mode == 'edit'"></i>
+          </button>
         </div>
       </form>
       <projects-list v-if="mode == 'list'" @change="alterMode($event)" />
@@ -183,16 +191,18 @@ import projectsList from '@/components/project_list.vue';
 import { required } from 'vuelidate/lib/validators';
 import { parse, parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt-BR';
+import spinner from '@/components/spinner.vue';
 export default {
   components: {
     datepicker,
     VueTagsInput,
     projectsList,
+    spinner
   },
   data: () => ({
     buttonText: 'Add projeto',
+    loading:false,
     visible: false,
-    tabs: 0,
     files: [],
     project: { tag: '', name: '' },
     pt: ptBR,
@@ -226,11 +236,10 @@ export default {
   methods: {
     sendData() {
       this.$v.$touch();
-
       if (this.$v.$error) {
         return;
       }
-
+      this.loading = true;
       this.project.date = new Date(this.project.date).getTime();
 
       const data = new FormData();
@@ -248,45 +257,31 @@ export default {
         data.append('files', file);
       });
 
-      // if (this.mode == 'edit') {
-      //   this.project.indexFileStar = this.fileStar.id;
-      //   this.project.Technologies = [...this.tags];
-      //   const data = new FormData();
-      //   this.filesUpload.forEach((f) => data.append('files', f));
-      //   Api.post('files', data).then(({ data }) => {
-      //     this.project.filesUpload = data.files;
-      //     Api.put('projects', this.project)
-      //       .then((res) => {
-      //         console.log(res);
-      //         this.$message.success('Projeto atualizado', {
-      //           duration: 3000,
-      //         });
-      //       })
-      //       .catch((e) => console.log(e));
-      //     return;
-      //   });
-      //   return;
-      // } else {
+      const that = this;
       Api.post('projects', data)
-        .then()
+        .then((res) => {
+          this.$message.success('Projeto cadastrado', {
+            duration: 3000,
+          });
+          that.clear();
+          that.$v.$reset();
+          that.loading = false;
+        })
         .catch((e) => console.log(e));
-      this.clear();
-      // }
+
     },
     async update() {
+
       this.project.date = new Date(this.project.date).getTime();
       this.project.indexFileStar = this.fileStar.id;
 
       this.project.Technologies = [...this.tags];
-
+      this.loading = true;
       const data = new FormData();
       if (this.filesUpload.length > 0) {
         this.filesUpload.forEach((f) => data.append('files', f));
         const { data: res } = await Api.post('files', data);
         this.project.filesUpload = res.files;
-        // .then(({ data }) => {
-        //   this.project.filesUpload = data.files;
-        // });
       }
       Api.put('projects', this.project)
         .then((res) => {
@@ -294,6 +289,7 @@ export default {
           this.$message.success('Projeto atualizado', {
             duration: 3000,
           });
+          this.loading = false;
         })
         .catch((e) => console.log(e));
     },
@@ -338,7 +334,7 @@ export default {
       const that = this;
 
       that.files = [...Array.from(that.files), ...Array.from(Files)];
-      console.log(that.files);
+      // console.log(that.files);
 
       that.files.forEach((file) => {
         if (!file.url) {
@@ -360,7 +356,7 @@ export default {
   },
   mounted() {
     const that = this;
-    dao.url = 'Technologies';
+    dao.url = 'Technologies?limit=10000';
     dao.get().then(({ data }) => {
       const tags = Object.values(data);
       delete tags[tags.length - 1];

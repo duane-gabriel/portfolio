@@ -73,8 +73,10 @@ export default {
   },
   watch: {
     index() {
-      this.index = Number(this.index.split('_')[0]);
-      this.visible = true;
+      if (!Number.isInteger(this.index)) {
+        this.index = Number(this.index.split('_')[0]);
+        this.visible = true;
+      }
     },
   },
   head: {

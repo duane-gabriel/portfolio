@@ -8,7 +8,7 @@
     <div class="carousel-inner">
       <div
         v-for="(image, index) of images"
-        :class="['carousel-item', index === activeIndex ? 'active' : '']"
+        :class="['carousel-item', index === Index ? 'active' : '']"
         :key="image.src || image.url"
       >
         <img
@@ -27,7 +27,7 @@
       href="#carouselExampleControls"
       role="button"
       data-slide="prev"
-      v-if="images.length > 1 && images[this.activeIndex - 1]"
+      v-if="images.length > 1 && images[this.Index - 1]"
       @click="nav(-1)"
     >
       <i class="fas fa-angle-left icon"></i>
@@ -38,7 +38,7 @@
       href="#carouselExampleControls"
       role="button"
       data-slide="next"
-      v-if="images.length > 1 && images[this.activeIndex + 1]"
+      v-if="images.length > 1 && images[this.Index + 1]"
       @click="nav(+1)"
     >
       <i class="fas fa-angle-right icon"></i>
@@ -52,16 +52,16 @@ export default {
   props: ['images', 'visible', 'activeIndex'],
   data() {
     return {
-      // activeIndex: 0,
+      Index: this.activeIndex,
     };
   },
   methods: {
     nav(fun) {
-      if (fun === -1 && this.images[this.activeIndex - 1]) {
-        this.activeIndex -= 1;
+      if (fun === -1 && this.images[this.Index - 1]) {
+        this.Index -= 1;
       }
-      if (fun === +1 && this.images[this.activeIndex + 1]) {
-        this.activeIndex += 1;
+      if (fun === +1 && this.images[this.Index + 1]) {
+        this.Index += 1;
       }
     },
   },
