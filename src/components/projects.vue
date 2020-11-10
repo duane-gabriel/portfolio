@@ -274,7 +274,7 @@ export default {
 
       this.project.date = new Date(this.project.date).getTime();
       this.project.indexFileStar = this.fileStar.id;
-
+      this.project.Files = this.files;
       this.project.Technologies = [...this.tags];
       this.loading = true;
       const data = new FormData();
