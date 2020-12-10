@@ -1,7 +1,7 @@
 <template>
-  <div class="project-modal" v-if="visible">
+  <div class="project-modal" :id="'modal'+data.id" v-if="visible">
     <div class="container px-5">
-      <div class="d-flex justify-content-end mt-4">
+      <div class="d-flex justify-content-end mt-4 order-1">
         <span
           v-if="arrows.prev!=null"
           class="mr-3 cursor-pointer arrows-container"
@@ -26,13 +26,13 @@
       </div>
       <div class="row mt-5 px-4 px-sm-0 px-md-0 px-lg-0">
         <div
-          class="modal-project-content col-md-8 col-lg-8 mt-1 mt-sm-5 mt-md-5 mt-lg-5 d-flex flex-column align-items-center"
+          class="modal-project-content col-md-8 col-lg-8 mt-1 mt-sm-5 mt-md-5 mt-lg-5 d-flex flex-column align-items-center order-1 ordr-sm-1 order-md-0 order-lg-0 order-xl-0"
           v-html="data.content"
         ></div>
-        <div class="col-md-4 col-lg-4 mt-5">
+        <div class="col-md-4 col-lg-4 mt-5 order-0">
           <div class="descricao">
             <h2 class="h3 font-weight-light">Descrição</h2>
-            <div class="mt-3">
+            <div class="mt-3" v-if="data.preview">
               <i class="fas fa-globe-americas mr-2"></i>
               <a target="_blank" :href="data.preview" style="color:#424242">{{data.preview}}</a>
             </div>
@@ -139,6 +139,9 @@ export default {
       }
     }
   }
-
+  video {
+    width: 100%;
+    height: 600px;
+  }
 }
 </style>
