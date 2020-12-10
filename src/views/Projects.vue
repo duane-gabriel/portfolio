@@ -13,7 +13,7 @@
           style="width: 95%; flex-wrap: wrap;"
         >
           <div
-            class="col-sm-12 col-md-4 col-lg-4 col-xl-4"
+            class="col-sm-12 col-md-4 col-lg-4 col-xl-4 project-card"
             v-for="(project, index) of cards"
             :key="project.id"
           >
@@ -201,5 +201,9 @@ img {
       margin-bottom: 20px;
     }
   }
+}
+.project-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.5s ;
 }
 </style>
